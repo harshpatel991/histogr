@@ -1,0 +1,11 @@
+{
+  "name": "Hello World!",
+  "description": "My first Chrome App.",
+  "version": "0.1",
+  "manifest_version": 2,
+  "app": {
+    "background": {
+      "scripts": ["/js/background.js", "/js/d3.js", "/js/jquery-2.1.3.js"]
+    }
+  }
+}

@@ -1,0 +1,26 @@
+.nodes-chart div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+}
+
+.timeline-chart div {
+  font: 10px sans-serif;
+  background-color: black;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+}
+
+.analysis-chart div {
+  font: 10px sans-serif;
+  background-color: red;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+}
