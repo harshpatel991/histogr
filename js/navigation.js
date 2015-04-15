@@ -2,55 +2,32 @@
 // Makes the window.html page cleaner
 $(function() {
   $("#nodes").load("/html/nodes.html", function() {
-
-    var data = [4, 8, 15, 16, 23, 42];
-    var x = d3.scale.linear()
-        .domain([0, d3.max(data)])
-        .range([0, 420]);
-
-    d3.select(".nodes-chart")
-      .selectAll("div")
-        .data(data)
-      .enter().append("div")
-        .style("width", function(d) { return x(d) + "px"; })
-        .text(function(d) { return d; });
-  });
+    var script = document.createElement('script'); //done loading the HTML, load the corresponding JS
+    script.src = '/js/nodes.js';
+    document.head.appendChild(script);
+  })
 });
 
 $(function() {
   $("#timeline").load("/html/timeline.html", function() {
-    var data = [1, 2, 3, 5, 6];
-
-    var x = d3.scale.linear()
-        .domain([0, d3.max(data)])
-        .range([0, 420]);
-
-    d3.select(".timeline-chart")
-      .selectAll("div")
-        .data(data)
-      .enter().append("div")
-        .style("width", function(d) { return x(d) + "px"; })
-        .text(function(d) { return d; });
-  });
+    var script = document.createElement('script'); //done loading the HTML, load the corresponding JS
+    script.src = '/js/timeline.js';
+    document.head.appendChild(script);
+  })
 });
 
 $(function() {
   $("#analysis").load("/html/analysis.html", function() {
-    var data = [1, 1, 2, 2, 3, 3];
-
-    var x = d3.scale.linear()
-        .domain([0, d3.max(data)])
-        .range([0, 420]);
-
-    d3.select(".analysis-chart")
-      .selectAll("div")
-        .data(data)
-      .enter().append("div")
-        .style("width", function(d) { return x(d) + "px"; })
-        .text(function(d) { return d; });
+    var script = document.createElement('script'); //done loading the HTML, load the corresponding JS
+    script.src = '/js/analysis.js';
+    document.head.appendChild(script);
   });
 });
 
 $(function() {
-  $("#banlist").load("/html/banlist.html");
+  $("#banlist").load("/html/banlist.html", function() {
+    var script = document.createElement('script'); //done loading the HTML, load the corresponding JS
+    script.src = '/js/banlist.js';
+    document.head.appendChild(script);
+  });
 });
