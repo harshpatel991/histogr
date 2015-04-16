@@ -1,3 +1,44 @@
+html
+{
+    height: 100%;
+}
+
+body {
+  min-height: 100%;
+  height: 100%;
+}
+
+.sidebar-button {
+  min-height: 25%;
+
+}
+
+.sidebar-button a {
+  color: #fff;
+  font-size: 2.5em;
+}
+
+#node-button {
+  background-color: #f9235f;
+}
+
+#timeline-button {
+  background-color: #c83a7e;
+}
+
+#analysis-button {
+  background-color: #9253a0;
+}
+
+#banlist-button {
+  background-color: #3e79d6;
+}
+
+.full-height {
+  min-height: 100%;
+  height: 100%;
+}
+
 .nodes-chart div {
   font: 10px sans-serif;
   background-color: steelblue;
