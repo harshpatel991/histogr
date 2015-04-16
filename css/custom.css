@@ -1,5 +1,4 @@
-html
-{
+html {
     height: 100%;
 }
 
@@ -8,18 +7,27 @@ body {
   height: 100%;
 }
 
+.sidebar-buttons-column {
+    padding-left: 0px;
+}
+
 .sidebar-button {
   min-height: 25%;
-
 }
 
 .sidebar-button a {
+  color: rgba(255, 255, 255, .35);
+  font-size: 2vw;
+  text-decoration: none;
+}
+
+.sidebar-icon {
+  font-size: 7vh;
   color: #fff;
-  font-size: 2.5em;
 }
 
 #node-button {
-  background-color: #f9235f;
+  background-color: #FB5282;
 }
 
 #timeline-button {
@@ -37,6 +45,21 @@ body {
 .full-height {
   min-height: 100%;
   height: 100%;
+}
+
+.horizontal-text-center {
+  text-align: center;
+}
+
+.vertical-center-wrapper {
+  width: 100%;
+  height: 25%;
+  display: table;
+}
+
+.vertical-center-outer {
+  display: table-cell;
+  vertical-align: middle;
 }
 
 .nodes-chart div {
