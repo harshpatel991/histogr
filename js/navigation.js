@@ -21,6 +21,19 @@ $(function() {
     var script = document.createElement('script'); //done loading the HTML, load the corresponding JS
     script.src = '/js/analysis.js';
     document.head.appendChild(script);
+
+    $("#analysis-history").load("/html/analysis-history.html", function() { //load the history tab
+      var scriptHistory = document.createElement('script'); //done loading the HTML, load the corresponding JS
+      scriptHistory.src = '/js/analysis-history.js';
+      document.head.appendChild(scriptHistory);
+    });
+
+    $("#analysis-distractions").load("/html/analysis-distractions.html", function() { //load the distractions tab
+      var scriptDistractions = document.createElement('script'); //done loading the HTML, load the corresponding JS
+      scriptDistractions.src = '/js/analysis-distractions.js';
+      document.head.appendChild(scriptDistractions);
+    });
+
   });
 });
 

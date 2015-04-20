@@ -5,8 +5,8 @@ var x = d3.scale.linear()
     .range([0, 420]);
 
 d3.select(".analysis-chart")
-  .selectAll("div")
+    .selectAll("div")
     .data(data)
-  .enter().append("div")
+    .enter().append("div")
     .style("width", function(d) { return x(d) + "px"; })
     .text(function(d) { return d; });
