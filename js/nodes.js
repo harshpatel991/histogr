@@ -74,13 +74,9 @@ $(window).on("resize", function() {
 
 //Change size of graph to fit parent element
 function scaleGraph() {
-    console.log("scalling");
     var aspect = width / height;
     var targetWidth = chart.parent().width();
     var targetHeight = chart.parent().height();
-
-    console.log("My ratio: " + aspect);
-    console.log("parent ratio: " + targetWidth/targetHeight);
 
     chart.attr("width", "100%");
     chart.attr("height", "100%");
