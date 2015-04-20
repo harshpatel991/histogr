@@ -1,7 +1,7 @@
 //Adapted from d3.js Sticky Force Layout guide http://bl.ocks.org/mbostock/3750558
 
-var width = 960,
-    height = 550;
+var width = 500,
+    height = 250;
 
 var force = d3.layout.force()
     .size([width, height])
@@ -16,8 +16,8 @@ var svg = d3.select(".nodes-chart").append("svg")
     .attr("id", "nodes-svg")
     .attr("width", width)
     .attr("height", height)
-    .attr("viewBox", "0 0 960 500")
-    .attr("preserveAspectRatio", "xMidYMid");
+    .attr("viewBox", "0 0 960 500");
+    //.attr("preserveAspectRatio", "xMinYMin");
 
 //Fade nodes into view
 svg.style("opacity", 1e-6)
@@ -74,10 +74,16 @@ $(window).on("resize", function() {
 
 //Change size of graph to fit parent element
 function scaleGraph() {
+    console.log("scalling");
     var aspect = width / height;
     var targetWidth = chart.parent().width();
-    chart.attr("width", targetWidth);
-    chart.attr("height", targetWidth / aspect);
+    var targetHeight = chart.parent().height();
+
+    console.log("My ratio: " + aspect);
+    console.log("parent ratio: " + targetWidth/targetHeight);
+
+    chart.attr("width", "100%");
+    chart.attr("height", "100%");
 }
 
 //Run resizing first time when opening app

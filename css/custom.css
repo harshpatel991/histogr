@@ -11,7 +11,11 @@ body {
 }
 
 h1 {
-  font-size: 60px;
+  font-size: 6vmin;
+}
+
+h4 {
+  font-size: 2vmin;
 }
 
 /*Sidebar styling*/
