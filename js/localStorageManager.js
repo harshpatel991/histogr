@@ -54,10 +54,12 @@ function existsInStorage(key, searchValue, callback) {
 
     retrieveFromStorage(key, function(values) {
         var contains = false;
-        for(var i = 0; i < values.length; i++) {
-            if(values[i] === searchValue) {
-                contains = true;
-                break;
+        if(values !== undefined) {
+            for(var i = 0; i < values.length; i++) {
+                if(values[i] === searchValue) {
+                    contains = true;
+                    break;
+                }
             }
         }
         callback(contains);
