@@ -5,6 +5,10 @@ $(function() {
     var script = document.createElement('script'); //done loading the HTML, load the corresponding JS
     script.src = '/js/nodes.js';
     document.head.appendChild(script);
+
+    var timeFrameSlectorScript = document.createElement('script');
+    timeFrameSlectorScript.src = '/js/timeFrameSelector.js';
+    document.head.appendChild(timeFrameSlectorScript);
   })
 });
 
