@@ -49,6 +49,7 @@ function getDomainNameFromUrl(url){
 // Search history to find up to ten links that a user has typed in,
 // and show those links in a popup.
 function buildTypedUrlList(granularity) {
+    Spinner.show();
     var partialDomainHistory = {};
     var id = 0;
     // To look for history items visited in the last week,
@@ -160,7 +161,9 @@ function buildTypedUrlList(granularity) {
                 linkDomains(srcDomain, destDomain);
             }
         }
+        Spinner.hide();
     };
 }
-
-buildTypedUrlList('day');
+$(document).ready(function(){
+    buildTypedUrlList('week');
+});
