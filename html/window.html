@@ -61,7 +61,26 @@
 
         <div class="col-xs-10 remove-lr-padding">
           <!-- Tab panes -->
-          <div class="tab-content">
+          <div class="tab-content" id="main-tab-content">
+
+            <div class="timeframe-selector">
+              <div class="form-inline display-none pull-right" id="custom-time-frame">
+                <div class="form-group">
+                  <label>From</label> <input type="text" id="custom-time-from">
+                  <label>To</label> <input type="text"  id="custom-time-to">
+                  <button id="set-custom-timeframe" class="btn btn-primary">Set</button>
+                </div>
+              </div>
+
+              <select class="form-control pull-right" id="timeframe-select">
+                <option value="1">Day</option>
+                <option value="7">Week</option>
+                <option value="30">Month</option>
+                <option value="365">Year</option>
+                <option value="custom">Custom</option>
+              </select>
+            </div>
+
             <div role="tabpanel" class="tab-pane fade in active" id="nodes">Placeholder</div>
             <div role="tabpanel" class="tab-pane fade" id="timeline">Placeholder</div>
             <div role="tabpanel" class="tab-pane fade" id="analysis">Placeholder</div>
@@ -78,3 +97,5 @@
 
 
 </html>
+
+
