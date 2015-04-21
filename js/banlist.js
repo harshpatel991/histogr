@@ -40,9 +40,11 @@ function listRestrictedDomains() {
 
     retrieveFromStorage("restrictedDomains", function(items) { //get domains from storage
         console.log(items);
-        for (var index = 0; index < items.length; index++) {
-            $("#restricted-domains-list").append(items[index] + '<button id="delete-restricted-' + index +'">Delete</button><br>');
-            $("#delete-restricted-"+index).click(deleteRestrictedDomain(index));
+        if(items !== undefined) {
+            for (var index = 0; index < items.length; index++) {
+                $("#restricted-domains-list").append(items[index] + '<button id="delete-restricted-' + index +'">Delete</button><br>');
+                $("#delete-restricted-"+index).click(deleteRestrictedDomain(index));
+            }
         }
     });
 }
@@ -51,9 +53,11 @@ function listDistractingDomains() {
     $("#distracting-domains-list").empty(); //clear any domains on the page
 
     retrieveFromStorage("distractingDomains", function(items) { //get domains from storage
-        for (var index = 0; index < items.length; index++) {
-            $("#distracting-domains-list").append(items[index] + '<button id="delete-distracting-' + index +'">Delete</button><br>');
-            $("#delete-distracting-"+index).click(deleteDistractingDomain(index));
+        if(items !== undefined) {
+            for (var index = 0; index < items.length; index++) {
+                $("#distracting-domains-list").append(items[index] + '<button id="delete-distracting-' + index + '">Delete</button><br>');
+                $("#delete-distracting-" + index).click(deleteDistractingDomain(index));
+            }
         }
     });
 }
