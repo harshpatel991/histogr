@@ -31,6 +31,7 @@ h4 {
 }
 
 .sidebar-button {
+  cursor: pointer;
   min-height: 25%;
 }
 
@@ -83,15 +84,6 @@ h4 {
 }
 
 /*Place holder charts styling*/
-.nodes-chart div {
-  font: 10px sans-serif;
-  background-color: steelblue;
-  text-align: right;
-  padding: 3px;
-  margin: 1px;
-  color: white;
-}
-
 .timeline-chart div {
   font: 10px sans-serif;
   background-color: black;
@@ -125,4 +117,12 @@ h4 {
 
 .node.fixed {
   fill: #F2517F;
+}
+
+.nodes-tooltip {
+  background-color: #e4e4e4;
+}
+
+.green {
+  color: #3aa233
 }

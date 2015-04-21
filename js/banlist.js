@@ -1,11 +1,12 @@
-$("#submit-restricted").click(addRestrictedDomain);
-$("#submit-distracting").click(addDistractingDomain);
-
 //On clicking the banlist side bar button, refresh the lists
 $("#banlist-button").click(function() {
+    $('#mainTabList a[href="#banlist"]').tab('show')
     listRestrictedDomains();
     listDistractingDomains();
 });
+
+$("#submit-restricted").click(addRestrictedDomain);
+$("#submit-distracting").click(addDistractingDomainFromTextBox);
 
 //Called when clicking restricted domain button
 function addRestrictedDomain() {
@@ -20,11 +21,15 @@ function addRestrictedDomain() {
 }
 
 //Called when clicking distracting domain button
-function addDistractingDomain() {
+function addDistractingDomainFromTextBox() {
     var urlMarkAsDistracting = $('#distracting-domain').val();
-
     $('#distracting-domain').val(""); //clear the box
-    appendToStorage("distractingDomains", urlMarkAsDistracting, function () {
+    addDistractingDomain(urlMarkAsDistracting);
+}
+
+function addDistractingDomain(domain) {
+    console.log("adding distracting domain: " + domain);
+    appendToStorage("distractingDomains", domain, function () {
         listDistractingDomains();
     });
 }
@@ -94,4 +99,24 @@ function retrieveFromStorage(key, callback) {
     chrome.storage.local.get(key, function(value) {
         callback(value[key])
     });
+}
+
+function existsInStorage(key, searchValue, callback) {
+
+    retrieveFromStorage(key, function(values) {
+        console.log("values:");
+        console.log(values);
+        console.log("searching for: " + searchValue);
+
+        var contains = false;
+        for(var i = 0; i < values.length; i++) {
+            if(values[i] === searchValue) {
+                contains = true;
+                break;
+            }
+        }
+        console.log("contains: " + contains);
+        callback(contains);
+    });
+
 }
