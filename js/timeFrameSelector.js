@@ -6,6 +6,10 @@ $(function() {
     $( "#custom-time-to" ).datepicker(); //initialize date picker
 });
 
+$("#domainfilter-select").change(function(){
+    $("#timeframe-select").change();
+});
+
 $("#timeframe-select").change(function() {
     if ($('#timeframe-select').val() === 'custom') {
         $('#custom-time-frame').removeClass("display-none");
@@ -29,6 +33,7 @@ $('#set-custom-timeframe').click(function () {
 });
 
 function timeFrameChange(startDate, endDate) {
+    var filterVal = $('#domainfilter-select').val();
     console.log("Time frame has changed. Start date: " + startDate + " End date: " + endDate);
-    Parser.parseHistoryFromSpan(startDate.getTime(), endDate.getTime());
+    Parser.parseHistoryFromSpan(startDate.getTime(), endDate.getTime(), filterVal);
 }

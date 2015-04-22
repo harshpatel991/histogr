@@ -14,6 +14,7 @@ function DomainHistory(id, name, type) {
     this.incomingLinks = [];
     this.urlFreq = 0;
     this.linkFreq = 0;
+    this.totalFreq = 0;
 }
 
 function linkDomains(srcDomain, destDomain){
@@ -45,7 +46,7 @@ function getDomainNameFromUrl(url){
 
 // Search history to find up to ten links that a user has typed in,
 // and show those links in a popup.
-var buildTypedUrlList = function(startTime, endTime) {
+var buildTypedUrlList = function(startTime, endTime, filter) {
     Spinner.show();
     var partialDomainHistory = {};
     var id = 0;
@@ -66,6 +67,9 @@ var buildTypedUrlList = function(startTime, endTime) {
             // For each history item, get details on all visits.
             for (var i = 0; i < historyItems.length; ++i) {
                 var url = historyItems[i].url;
+                if (filter == 1 && searchEngineDomains.indexOf(getDomainNameFromUrl(url))>-1){
+                    continue;
+                }
                 var processVisitsWithUrl = function(url) {
                     // We need the url of the visited item to process the visit.
                     // Use a closure to bind the  url into the callback's args.
@@ -132,6 +136,7 @@ var buildTypedUrlList = function(startTime, endTime) {
         for (var domainNameKey in partialDomainHistory){
             if (partialDomainHistory.hasOwnProperty(domainNameKey)){
                 var historyItem = partialDomainHistory[domainNameKey];
+                historyItem.totalFreq = historyItem.urlFreq + historyItem.linkFreq;
                 parsedDomainHistory[historyItem.id] = historyItem;
             }
         }
@@ -151,6 +156,10 @@ var buildTypedUrlList = function(startTime, endTime) {
         }
         //TODO: Mark distraction sites based on given file
         //TODO: Find trigger sites: links between site and distraction site greater than average links per site
+        //appendToStorage('title', 'hello', function(){});
+        var parseEvent = document.createEvent('CustomEvent');
+        parseEvent.initCustomEvent('parse', true, true, {'entireHistory':entireHistory, 'parsedDomainHistory':parsedDomainHistory});
+        document.dispatchEvent(parseEvent);
         Spinner.hide();
     };
 }
@@ -159,8 +168,9 @@ function Parser(){}
 
 var entireHistory = [];
 var parsedDomainHistory = [];
-Parser.parseHistoryFromSpan = function(startTime, endTime){
-    buildTypedUrlList(startTime, endTime);
+var searchEngineDomains = ['google.com','bing.com','yahoo.com','ask.com'];
+Parser.parseHistoryFromSpan = function(startTime, endTime, filter){
+    buildTypedUrlList(startTime, endTime, filter);
 };
 Parser.getEntireHistory = function(){
     return entireHistory;
