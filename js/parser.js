@@ -32,9 +32,6 @@ function linkDomains(srcDomain, destDomain){
     destDomain.incomingLinks[srcDomain.id]++;
 }
 
-var entireHistory = [];
-var parsedDomainHistory = {};
-
 function getDomainNameFromUrl(url){
     if (url.indexOf('https://')==-1 && url.indexOf('http://')==-1){
         return '';
@@ -48,25 +45,12 @@ function getDomainNameFromUrl(url){
 
 // Search history to find up to ten links that a user has typed in,
 // and show those links in a popup.
-function buildTypedUrlList(granularity) {
+var buildTypedUrlList = function(startTime, endTime) {
     Spinner.show();
     var partialDomainHistory = {};
     var id = 0;
-    // To look for history items visited in the last week,
-    // subtract a week of microseconds from the current time.
-    var microsecondsInTimespan = 1000 * 60 * 60 * 24;
-    if (granularity == 'week'){
-        microsecondsInTimespan *= 7;
-    }
-    else if (granularity == 'month'){
-        microsecondsInTimespan *= 30;
-    }
-    else if (granularity == 'year'){
-        microsecondsInTimespan *= 365;
-    }
-
-    var endTime = (new Date).getTime();
-    var startTime = endTime - microsecondsInTimespan;
+    entireHistory = [];
+    parsedDomainHistory = [];
 
     // Track the number of callbacks from chrome.history.getVisits()
     // that we expect to get.  When it reaches zero, we have all results.
@@ -75,6 +59,7 @@ function buildTypedUrlList(granularity) {
     chrome.history.search({
             'text': '',              // Return every history item....
             'startTime': startTime,  // that was accessed less than one week ago.
+            'endTime': endTime,  // that was accessed less than one week ago.
             'maxResults': 99999
         },
         function(historyItems) {
@@ -115,13 +100,16 @@ function buildTypedUrlList(granularity) {
             var newDomain = partialDomainHistory[domain];
             var newHistoryItem = new HistoryVisitItem(newDomain.id, domain, visit.visitTime);
 
-            var typedTransitions = ['typed'];
+            var typedTransitions = ['typed', 'auto_bookmark', 'generated', 'keyword', 'keyword_generated'];
             if (typedTransitions.indexOf(visit.transition)>-1) {
                 newDomain.urlFreq++;
                 entireHistory.push(newHistoryItem);
             }
             else if (visit.transition == 'link'){
                 newDomain.linkFreq++;
+                entireHistory.push(newHistoryItem);
+            }
+            else{
                 entireHistory.push(newHistoryItem);
             }
         }
@@ -161,9 +149,29 @@ function buildTypedUrlList(granularity) {
                 linkDomains(srcDomain, destDomain);
             }
         }
+        //TODO: Mark distraction sites based on given file
+        //TODO: Find trigger sites: links between site and distraction site greater than average links per site
         Spinner.hide();
     };
 }
+
+function Parser(){}
+
+var entireHistory = [];
+var parsedDomainHistory = [];
+Parser.parseHistoryFromSpan = function(startTime, endTime){
+    buildTypedUrlList(startTime, endTime);
+};
+Parser.getEntireHistory = function(){
+    return entireHistory;
+};
+Parser.getParsedDomainHistory = function(){
+    return parsedDomainHistory;
+};
+
 $(document).ready(function(){
-    buildTypedUrlList('week');
+    var microsecondsInTimeSpan = 1000 * 60 * 60 * 24;
+    var timeNow = (new Date).getTime();
+    var timeYesterday = timeNow - microsecondsInTimeSpan;
+    Parser.parseHistoryFromSpan(timeYesterday, timeNow);
 });

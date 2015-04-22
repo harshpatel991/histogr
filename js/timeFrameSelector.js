@@ -16,7 +16,7 @@ $("#timeframe-select").change(function() {
         $('#custom-time-frame').addClass("display-none");
         var startDate = new Date();
         var endDate = new Date();
-        endDate = new Date(endDate.setDate(startDate.getDate() + parseInt($('#timeframe-select').val())));
+        startDate = new Date(startDate.setDate(endDate.getDate() - parseInt($('#timeframe-select').val())));
 
         timeFrameChange(startDate, endDate);
     }
@@ -29,8 +29,6 @@ $('#set-custom-timeframe').click(function () {
 });
 
 function timeFrameChange(startDate, endDate) {
-
     console.log("Time frame has changed. Start date: " + startDate + " End date: " + endDate);
-
-
+    Parser.parseHistoryFromSpan(startDate.getTime(), endDate.getTime());
 }
