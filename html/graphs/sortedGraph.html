@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <style>
+
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            position: relative;
+            width: 550px;
+        }
+
+        .axis text {
+            font: 10px sans-serif;
+        }
+
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+        }
+
+        .bar {
+            fill: steelblue;
+            fill-opacity: .9;
+        }
+
+        .x.axis path {
+            display: none;
+        }
+
+    </style>
+
+    <script src="/js/d3.js"></script>
+
+</head>
+<body>
+    <h3 id="analysis-chart-title">Chart Title</h3>
+    <label><input type="checkbox"> Sort values</label>
+    <div class="analysis-chart-sort"></div>
+    <script src="/js/graphs/sortedGraph.js"></script>
+</body>
+</html>
