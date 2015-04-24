@@ -1,3 +1,9 @@
+//On clicking the timelline side bar button
+$("#timeline-button").click(function() {
+    $('#mainTabList a[href="#timeline"]').tab('show')
+});
+
+
 var data = [1, 2, 3, 5, 6];
 
 var x = d3.scale.linear()
