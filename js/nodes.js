@@ -14,12 +14,13 @@ $(document).ready(function(){
 });
 
 var goldenLinkRatio = 0.25;
+var goldenSizeRatio = 10;
 
 function getGraphData(domainHistory){
     domainHistory.sort(function (a, b) {
         return b.totalFreq - a.totalFreq
     });
-    var slicedHistory = domainHistory.slice(0, 20);
+    var slicedHistory = domainHistory.slice(0, 30);
     var graphData = {nodes: [], links: []};
 
     var totalFreq = 0;
@@ -34,9 +35,8 @@ function getGraphData(domainHistory){
             totalLinks += historyItem.outgoingLinks[j];
         }
         dataTranslation[historyItem.id] = iter++;
-        graphData.nodes.push({"id": historyItem.id, "domain": historyItem.name, "size": 8});
+        graphData.nodes.push({"id": historyItem.id, "domain": historyItem.name, "size": historyItem.totalFreq});
     }
-    console.log(totalLinks);
 
     for (i in slicedHistory) {
         historyItem = slicedHistory[i];
@@ -46,7 +46,14 @@ function getGraphData(domainHistory){
                 graphData.links.push({"source":  dataTranslation[historyItem.id], "target": dataTranslation[j]})
             }
         }
+    }
 
+    var avgFreq = totalFreq / totalItems;
+    for (i in graphData.nodes){
+        graphData.nodes[i].size *= goldenSizeRatio / avgFreq;
+        if (graphData.nodes[i].size > 50){
+            graphData.nodes[i].size = 50;
+        }
     }
 
     console.log(graphData);
