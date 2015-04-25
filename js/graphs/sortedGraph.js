@@ -1,4 +1,4 @@
-var onParse = function(historyData) {
+function onParse(historyData) {
     /*retrieveFromStorage('title', function(value){
         $('#analysis-chart-title').text(value);
     });*/
@@ -6,7 +6,7 @@ var onParse = function(historyData) {
     console.log(historyData);
     //$('#analysis-chart-title').text(parsedDomainHistory[0].name);
     createGraph(historyData);
-};
+}
 
 function createGraph(historyData) {
     d3.select(".analysis-chart-sort").html('');

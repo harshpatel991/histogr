@@ -1,4 +1,4 @@
-var relationTimeSpan = 1000 * 60 * 15; //15 minutes
+var relationTimeSpan = 1000 * 60 * 5; //15 minutes
 
 function HistoryVisitItem(domainId, domainName, visitTime){
     this.domainId = domainId;
