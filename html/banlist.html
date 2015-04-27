@@ -3,19 +3,34 @@
 <hr>
 
 
-<h3>Restricted Domains</h3>
 
-<input type="text" id="restricted-domain" placeholder="Add Restricted URL">
-<input type="text" id="restricted-domain-from" placeholder="From">
-<input type="text" id="restricted-domain-to" placeholder="To"><br>
-<input type="button" value="Submit" id="submit-restricted">
-
-<div id="restricted-domains-list"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div id="banlist-error-box"></div>
 
 
-<h3>Distractions</h3>
+            <h2>Restricted Domains</h2>
+            <form class="form-inline">
+                <input type="text" id="restricted-domain" class="form-control" placeholder="Add Restricted URL">
+                <input type="text" id="restricted-domain-from" class="form-control" placeholder="From">
+                <input type="text" id="restricted-domain-to" class="form-control" placeholder="To">
+                <button type="button" class="btn btn-primary" id="submit-restricted"><span class="glyphicon glyphicon-plus"></span> Add</button>
+            </form>
 
-<input type="text" id="distracting-domain" placeholder="Add Distraction URL"><br>
-<input type="button" class="" value="Submit" id="submit-distracting">
+            <hr>
+            <div id="restricted-domains-list"></div>
 
-<div id="distracting-domains-list"></div>
+            <h2>Distractions</h2>
+            <form class="form-inline">
+                <input type="text" id="distracting-domain" class="form-control" placeholder="Add Distraction URL">
+                <button type="button" class="btn btn-primary" id="submit-distracting"><span class="glyphicon glyphicon-plus"></span> Add</button>
+            </form>
+
+            <hr>
+            <div id="distracting-domains-list"></div>
+
+
+        </div>
+    </div>
+</div>
