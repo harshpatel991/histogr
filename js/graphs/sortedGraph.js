@@ -3,7 +3,6 @@ function onParse(historyData) {
         $('#analysis-chart-title').text(value);
     });*/
 
-    console.log(historyData);
     //$('#analysis-chart-title').text(parsedDomainHistory[0].name);
     createGraph(historyData);
 }

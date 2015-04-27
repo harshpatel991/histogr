@@ -13,37 +13,32 @@ $(function () {
     });
 });
 
-var goldenLinkRatio = 0.25;
+
 var goldenSizeRatio = 10;
 
 function getNodeGraphData(domainHistory) {
     domainHistory.sort(function (a, b) {
         return b.totalFreq - a.totalFreq
     });
+
     var slicedHistory = domainHistory.slice(0, 30);
     var graphData = {nodes: [], links: []};
-
     var totalFreq = 0;
-    var totalLinks = 0;
     var totalItems = slicedHistory.length;
     var dataTranslation = [];
     var iter = 0;
-    for (var i in slicedHistory) {
+    for (var i = 0; i < totalItems; i++) {
         var historyItem = slicedHistory[i];
         totalFreq += historyItem.totalFreq;
-        for (var j in historyItem.outgoingLinks) {
-            totalLinks += historyItem.outgoingLinks[j];
-        }
         dataTranslation[historyItem.id] = iter++;
-        graphData.nodes.push({"id": historyItem.id, "domain": historyItem.name, "size": historyItem.totalFreq});
+        graphData.nodes.push({"id": historyItem.id, "domain": historyItem.name, "size": historyItem.totalFreq, "domainType": historyItem.domainType});
     }
 
     for (i in slicedHistory) {
         historyItem = slicedHistory[i];
-        for (j in historyItem.outgoingLinks) {
-            var linkFreq = historyItem.outgoingLinks[j];
-            if (linkFreq > goldenLinkRatio * totalLinks / totalItems) {
-                graphData.links.push({"source": dataTranslation[historyItem.id], "target": dataTranslation[j]})
+        for (j in historyItem.outgoingRelations) {
+            if (dataTranslation[j] != undefined) {
+                graphData.links.push({"source": dataTranslation[historyItem.id], "target": dataTranslation[j]});
             }
         }
     }
@@ -129,7 +124,7 @@ function generateNodesGraph(graphData) {
         var relY = event.pageY - parentOffset.top;
 
         existsInStorage("distractingDomains", data.domain, function (exists) { //determine what text needs to be in the tool tip
-            var toolTipBox = '<div class="panel panel-default"> <div class="panel-heading"> <h3 class="panel-title">' + data.domain + ' <button class="btn btn-danger btn-xs" id="close-tooltip"><span class="glyphicon glyphicon-remove"></span></button></h3> </div> <div class="panel-body">Size: ' + data.size + '<br/>id: ' + data.id + '<hr>';
+            var toolTipBox = '<div class="panel panel-default"> <div class="panel-heading"> <h3 class="panel-title">' + data.domain + ' <button class="btn btn-danger btn-xs" id="close-tooltip"><span class="glyphicon glyphicon-remove"></span></button></h3> </div> <div class="panel-body">Size: ' + data.size + '<br/>id: ' + data.id + '<br/>type: ' + data.domainType + '<hr>';
 
             if (!exists) {
                 toolTipBox += '<button class="btn btn-primary btn-xs center-block" id="nodesAddAsDistraction"><span class="glyphicon glyphicon-plus"></span> Add as Distraction</button></div> </div>';

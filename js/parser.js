@@ -1,4 +1,5 @@
-var relationTimeSpan = 1000 * 60 * 5; //15 minutes
+var relationTimeSpan = 1000 * 60 * 15; //15 minutes
+var goldenLinkRatio = 0.7;
 
 function HistoryVisitItem(domainId, domainName, visitTime){
     this.domainId = domainId;
@@ -6,12 +7,13 @@ function HistoryVisitItem(domainId, domainName, visitTime){
     this.visitTime = visitTime;
 }
 
-function DomainHistory(id, name, type) {
+function DomainHistory(id, name) {
     this.id = id;
     this.name = name;
-    this.type = type;
+    this.domainType = 'other';
     this.outgoingLinks = [];
     this.incomingLinks = [];
+    this.outgoingRelations = [];
     this.urlFreq = 0;
     this.linkFreq = 0;
     this.totalFreq = 0;
@@ -46,7 +48,7 @@ function getDomainNameFromUrl(url){
 
 // Search history to find up to ten links that a user has typed in,
 // and show those links in a popup.
-var buildTypedUrlList = function(startTime, endTime, filter) {
+function buildTypedUrlList(startTime, endTime, filter) {
     Spinner.show();
     var partialDomainHistory = {};
     var id = 0;
@@ -81,7 +83,16 @@ var buildTypedUrlList = function(startTime, endTime, filter) {
                 numRequestsOutstanding++;
             }
             if (!numRequestsOutstanding) {
-                onAllVisitsProcessed();
+                retrieveFromStorage('distractingDomains', function(distractions){
+                    for (var i = 0; i < distractions.length; i++){
+                        var domainKey = distractions[i];
+                        console.log(domainKey);
+                        if (partialDomainHistory[domainKey] != undefined){
+                            partialDomainHistory[domainKey].domainType = 'distraction';
+                        }
+                    }
+                    onAllVisitsProcessed();
+                });
             }
         });
 
@@ -98,7 +109,7 @@ var buildTypedUrlList = function(startTime, endTime, filter) {
                 continue;
             }
             if (!partialDomainHistory[domain]) {
-                partialDomainHistory[domain] = new DomainHistory(id++, domain, 'other')
+                partialDomainHistory[domain] = new DomainHistory(id++, domain)
             }
 
             var newDomain = partialDomainHistory[domain];
@@ -122,7 +133,16 @@ var buildTypedUrlList = function(startTime, endTime, filter) {
         // then we have the final results.  Use them to build the list
         // of URLs to show in the popup.
         if (!--numRequestsOutstanding) {
-            onAllVisitsProcessed();
+            retrieveFromStorage('distractingDomains', function(distractions){
+                for (var i = 0; i < distractions.length; i++){
+                    var domainKey = distractions[i];
+                    console.log(domainKey);
+                    if (partialDomainHistory[domainKey] != undefined){
+                        partialDomainHistory[domainKey].domainType = 'distraction';
+                    }
+                }
+                onAllVisitsProcessed();
+            });
         }
     };
 
@@ -132,15 +152,21 @@ var buildTypedUrlList = function(startTime, endTime, filter) {
             return a.visitTime - b.visitTime;
         });
 
+        // Generate parsedDomainHistory
+        var totalFreq = 0;
         parsedDomainHistory = [];
         for (var domainNameKey in partialDomainHistory){
             if (partialDomainHistory.hasOwnProperty(domainNameKey)){
                 var historyItem = partialDomainHistory[domainNameKey];
                 historyItem.totalFreq = historyItem.urlFreq + historyItem.linkFreq;
                 parsedDomainHistory[historyItem.id] = historyItem;
+                totalFreq += historyItem.totalFreq;
             }
         }
 
+        // Find domain links
+        var totalLinks = 0;
+        var totalItems = parsedDomainHistory.length;
         for (var srcIdx = 0; srcIdx < entireHistory.length; srcIdx++){
             var srcVisit = entireHistory[srcIdx];
             var srcDomain = parsedDomainHistory[srcVisit.domainId];
@@ -150,10 +176,25 @@ var buildTypedUrlList = function(startTime, endTime, filter) {
                 if (destVisit.visitTime > srcVisit.visitTime + relationTimeSpan){
                     break;
                 }
-
                 linkDomains(srcDomain, destDomain);
+                totalLinks++;
             }
         }
+
+        // Find domain relations
+        for (i in parsedDomainHistory) {
+            historyItem = parsedDomainHistory[i];
+            for (j in historyItem.outgoingLinks) {
+                var linkFreq = historyItem.outgoingLinks[j];
+                if (linkFreq > goldenLinkRatio * totalLinks / totalItems) {
+                    historyItem.outgoingRelations.push(j);
+                    if (parsedDomainHistory[j].domainType === 'distraction') {
+                        historyItem.domainType = 'trigger';
+                    }
+                }
+            }
+        }
+
         //TODO: Mark distraction sites based on given file
         //TODO: Find trigger sites: links between site and distraction site greater than average links per site
         //appendToStorage('title', 'hello', function(){});
