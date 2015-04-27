@@ -1,22 +1,22 @@
 //On clicking the banlist side bar button, refresh the lists
-$("#node-button").click(function() {
+$("#node-button").click(function () {
     $('#mainTabList a[href="#nodes"]').tab('show');
     listRestrictedDomains();
     listDistractingDomains();
     closeToolTip();
 });
 
-$(document).ready(function(){
-    console.log('0here');
-    document.addEventListener('parse', function(value) {
-        generateGraph(getGraphData(value.detail.parsedDomainHistory));
+// Run when this tab is finished loading
+$(function () {
+    document.addEventListener('parse', function (value) {
+        generateNodesGraph(getNodeGraphData(value.detail.parsedDomainHistory))
     });
 });
 
 var goldenLinkRatio = 0.25;
 var goldenSizeRatio = 10;
 
-function getGraphData(domainHistory){
+function getNodeGraphData(domainHistory) {
     domainHistory.sort(function (a, b) {
         return b.totalFreq - a.totalFreq
     });
@@ -28,10 +28,10 @@ function getGraphData(domainHistory){
     var totalItems = slicedHistory.length;
     var dataTranslation = [];
     var iter = 0;
-    for (var i in slicedHistory){
+    for (var i in slicedHistory) {
         var historyItem = slicedHistory[i];
         totalFreq += historyItem.totalFreq;
-        for (var j in historyItem.outgoingLinks){
+        for (var j in historyItem.outgoingLinks) {
             totalLinks += historyItem.outgoingLinks[j];
         }
         dataTranslation[historyItem.id] = iter++;
@@ -40,31 +40,29 @@ function getGraphData(domainHistory){
 
     for (i in slicedHistory) {
         historyItem = slicedHistory[i];
-        for (j in historyItem.outgoingLinks){
+        for (j in historyItem.outgoingLinks) {
             var linkFreq = historyItem.outgoingLinks[j];
-            if (linkFreq > goldenLinkRatio * totalLinks / totalItems){
-                graphData.links.push({"source":  dataTranslation[historyItem.id], "target": dataTranslation[j]})
+            if (linkFreq > goldenLinkRatio * totalLinks / totalItems) {
+                graphData.links.push({"source": dataTranslation[historyItem.id], "target": dataTranslation[j]})
             }
         }
     }
 
     var avgFreq = totalFreq / totalItems;
-    for (i in graphData.nodes){
+    for (i in graphData.nodes) {
         graphData.nodes[i].size *= goldenSizeRatio / avgFreq;
-        if (graphData.nodes[i].size > 50){
+        if (graphData.nodes[i].size > 50) {
             graphData.nodes[i].size = 50;
         }
     }
-
-    console.log(graphData);
-
     return graphData;
 }
 
 var tooltip = '';
 
-function generateGraph(graphData) {
+function generateNodesGraph(graphData) {
     var margin = {top: 20, right: 20, bottom: 100, left: 40};
+    $('.nodes-chart').html('');
 //Adapted from d3.js Sticky Force Layout guide http://bl.ocks.org/mbostock/3750558
     var width = 500,
         height = 250;
@@ -105,25 +103,25 @@ function generateGraph(graphData) {
         .style("visibility", "hidden")
         .text("a simple tooltip");
 
-        force.nodes(graphData.nodes)
-            .links(graphData.links)
-            .start();
+    force.nodes(graphData.nodes)
+        .links(graphData.links)
+        .start();
 
-        link = link.data(graphData.links)
-            .enter().append("line")
-            .attr("class", "link");
+    link = link.data(graphData.links)
+        .enter().append("line")
+        .attr("class", "link");
 
-        node = node.data(graphData.nodes)
-            .enter().append("circle")
-            .attr("r", function (d) {
-                return d.size * 2;
-            }) //set size for each node to the value read from json
-            .attr("class", "node")
-            .on("click", function (d) {
-                clickNode(d);
-                d3.event.stopPropagation();
-            }) //don't let propigation move to outside svg
-            .call(drag);
+    node = node.data(graphData.nodes)
+        .enter().append("circle")
+        .attr("r", function (d) {
+            return d.size * 2;
+        }) //set size for each node to the value read from json
+        .attr("class", "node")
+        .on("click", function (d) {
+            clickNode(d);
+            d3.event.stopPropagation();
+        }) //don't let propigation move to outside svg
+        .call(drag);
 
     function clickNode(data) {
         var parentOffset = $('.nodes-chart').parent().offset(); //calculate where the tool tip needs to appear

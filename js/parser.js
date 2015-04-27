@@ -162,7 +162,7 @@ var buildTypedUrlList = function(startTime, endTime, filter) {
         document.dispatchEvent(parseEvent);
         Spinner.hide();
     };
-}
+};
 
 function Parser(){}
 
@@ -178,10 +178,3 @@ Parser.getEntireHistory = function(){
 Parser.getParsedDomainHistory = function(){
     return parsedDomainHistory;
 };
-
-$(document).ready(function(){
-    var microsecondsInTimeSpan = 1000 * 60 * 60 * 24;
-    var timeNow = (new Date).getTime();
-    var timeYesterday = timeNow - microsecondsInTimeSpan;
-    Parser.parseHistoryFromSpan(timeYesterday, timeNow);
-});

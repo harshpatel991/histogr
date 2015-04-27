@@ -1,4 +1,5 @@
-$(document).ready(function(){
+// Run when this tab is finished loading
+$(function(){
     $('iframe').each(function(i, frame){
         document.addEventListener('parse', function(value){
             var parsedDomainHistory = value.detail.parsedDomainHistory;
