@@ -1,3 +1,9 @@
+//On clicking the timelline side bar button
+$("#distractions-analysis-button").click(function() {
+    $('#mainTabList a[href="#distractions-analysis"]').tab('show')
+});
+
+
 $(document).ready(function(){
     var distractions = {"Reddit":"http://reddit.com","Facebook":"http://facebook.com","Youtube":"http://youtube.com","Buzzfeed":"http://buzzfeed.com","Imgur":"http://imgur.com"};
     var div = document.getElementById("list-group")

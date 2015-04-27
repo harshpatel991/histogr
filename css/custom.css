@@ -32,12 +32,12 @@ h4 {
 
 .sidebar-button {
   cursor: pointer;
-  min-height: 25%;
+  min-height: 20%;
 }
 
 .sidebar-button a {
   color: rgba(255, 255, 255, .35);
-  font-size: 2vw;
+  font-size: 1.5vw;
   text-decoration: none;
 }
 
@@ -54,12 +54,16 @@ h4 {
   background-color: #9253a0;
 }
 
-#analysis-button {
+#history-analysis-button {
   background-color: #5D53A0;
 }
 
-#banlist-button {
+#distractions-analysis-button {
   background-color: #3e79d6;
+}
+
+#banlist-button {
+  background-color: #109dd6;
 }
 
 /*General styling*/
@@ -74,7 +78,7 @@ h4 {
 
 .vertical-center-wrapper {
   width: 100%;
-  height: 25%;
+  height: 20%;
   display: table;
 }
 

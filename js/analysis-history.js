@@ -1,3 +1,9 @@
+//On clicking the timelline side bar button
+$("#history-analysis-button").click(function() {
+    $('#mainTabList a[href="#history-analysis"]').tab('show')
+});
+
+
 // Run when this tab is finished loading
 $(function(){
     $('iframe').each(function(i, frame){

@@ -1,20 +1,24 @@
 //On clicking the banlist side bar button, refresh the lists
 $("#node-button").click(function () {
     $('#mainTabList a[href="#nodes"]').tab('show');
-    listRestrictedDomains();
-    listDistractingDomains();
-    closeToolTip();
+    //listRestrictedDomains();
+    //listDistractingDomains();
+    //closeToolTip();
 });
 
 // Run when this tab is finished loading
 $(function () {
     document.addEventListener('parse', function (value) {
-        generateNodesGraph(getNodeGraphData(value.detail.parsedDomainHistory))
+        generateNodesGraph(getNodeGraphData(value.detail.parsedDomainHistory), ".nodes-chart")
     });
 });
 
 
 var goldenSizeRatio = 10;
+
+function getSingleNodesGraphData(domainHistory, domainNames){
+    return getNodeGraphData(domainHistory);
+}
 
 function getNodeGraphData(domainHistory) {
     domainHistory.sort(function (a, b) {
@@ -53,11 +57,10 @@ function getNodeGraphData(domainHistory) {
     return graphData;
 }
 
-var tooltip = '';
 
-function generateNodesGraph(graphData) {
+function generateNodesGraph(graphData, divSelector) {
     var margin = {top: 20, right: 20, bottom: 100, left: 40};
-    $('.nodes-chart').html('');
+    $(divSelector).html('');
 //Adapted from d3.js Sticky Force Layout guide http://bl.ocks.org/mbostock/3750558
     var width = 500,
         height = 250;
@@ -71,7 +74,7 @@ function generateNodesGraph(graphData) {
     var drag = force.drag()
         .on("dragstart", dragstart);
 
-    var svg = d3.select(".nodes-chart").append("svg")
+    var svg = d3.select(divSelector).append("svg")
         .attr("id", "nodes-svg")
         .attr("width", width)
         .attr("height", height)
@@ -90,7 +93,7 @@ function generateNodesGraph(graphData) {
     var link = svg.selectAll(".link"),
         node = svg.selectAll(".node");
 
-    tooltip = d3.select(".nodes-chart")
+    var tooltip = d3.select(".nodes-chart")
         .append("div")
         .attr("class", "nodes-tooltip")
         .style("position", "absolute")
@@ -193,10 +196,11 @@ function generateNodesGraph(graphData) {
         chart.attr("height", "100%");
     }
 
+    function closeToolTip() {
+        tooltip.style("visibility", "hidden");
+    }
+
 //Run resizing first time when opening app
     scaleGraph();
 }
 
-function closeToolTip() {
-    tooltip.style("visibility", "hidden");
-}
