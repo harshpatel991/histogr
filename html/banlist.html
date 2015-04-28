@@ -13,8 +13,11 @@
             <h2>Restricted Domains</h2>
             <form class="form-inline">
                 <input type="text" id="restricted-domain" class="form-control" placeholder="Add Restricted URL">
-                <input type="text" id="restricted-domain-from" class="form-control" placeholder="From">
-                <input type="text" id="restricted-domain-to" class="form-control" placeholder="To">
+
+                <input id="restricted-domain-from" type="text" class="time ui-timepicker-input form-control" autocomplete="off" placeholder="From">
+
+                <input id="restricted-domain-to" type="text" class="time ui-timepicker-input form-control" autocomplete="off" placeholder="To">
+
                 <button type="button" class="btn btn-primary" id="submit-restricted"><span class="glyphicon glyphicon-plus"></span> Add</button>
             </form>
 

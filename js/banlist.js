@@ -9,6 +9,9 @@ $("#banlist-button").click(function() {
     hideTimeFrameSelector();
 });
 
+$('#restricted-domain-from').timepicker(); //initialize datepickers
+$('#restricted-domain-to').timepicker();
+
 $("#submit-restricted").click(addRestrictedDomain);
 $("#submit-distracting").click(addDistractingDomainFromTextBox);
 
