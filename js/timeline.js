@@ -4,6 +4,27 @@ $("#timeline-button").click(function() {
     showTimeFrameSelector();
 });
 
+$(function () {
+    document.addEventListener('parse', function (value) {
+        generateTimeline(value.detail.parsedDomainHistory)
+    });
+});
 
 
 
+
+function generateTimeline(data){
+	
+	var graph = new Rickshaw.Graph( {
+	element: document.getElementById("timeline-chart"),
+	width: 500,
+	height: 250,
+	renderer: 'scatterplot',
+	series: [
+		{
+			color: "#ff9030",
+			data: data
+		}
+	]
+} );
+}
