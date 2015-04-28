@@ -65,3 +65,14 @@ function existsInStorage(key, searchValue, callback) {
         callback(contains);
     });
 }
+
+function addSingleKeyToStorage(key, value, callback){
+    chrome.storage.local.get(function(cfg) {
+        cfg[key] = value;
+        chrome.storage.local.set(cfg, callback);
+    });
+}
+
+function removeSingleKeyFromStorage(key, callback){
+    addSingleKeyToStorage(key, undefined, callback);
+}

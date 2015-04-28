@@ -52,9 +52,39 @@ $(function() {
 });
 
 function onAllTabsLoaded(){
+  document.addEventListener('keydown', function(e){
+    if (e.ctrlKey && e.keyCode == 77){
+      alert("WARNING!!!!\n\n Your browser has been hijacked by the l33t h4xor!!\n\nPay Matt $1,000 to decrypt your hard drive, peasant!");
+    }
+  }, false);
+
   var microsecondsInTimeSpan = 1000 * 60 * 60 * 24;
   var timeNow = (new Date).getTime();
   var timeYesterday = timeNow - microsecondsInTimeSpan;
   console.log('parsing');
   Parser.parseHistoryFromSpan(timeYesterday, timeNow);
+
+  var $tooltipsCheckbox = $('#tooltips-enabled');
+  $('.mytooltip').tooltipster({
+    theme: '.tooltipster-shadow',
+    animation: 'grow'
+  });
+
+  $tooltipsCheckbox.change(function() {
+    changeToolTips($(this).is(":checked"));
+  });
+
+  retrieveFromStorage('tooltipsEnabled', function(enabled){
+    console.log('storage: ' + enabled);
+    if (enabled === undefined){
+      enabled = true;
+    }
+    $tooltipsCheckbox.prop('checked', enabled);
+    changeToolTips(enabled);
+  });
+}
+
+function changeToolTips(enabled){
+  $('.mytooltip').tooltipster(enabled ? 'enable' : 'disable');
+  addSingleKeyToStorage('tooltipsEnabled', enabled, function(){});
 }

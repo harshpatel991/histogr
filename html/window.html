@@ -2,115 +2,159 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
+    <meta charset="utf-8">
 
-  <link href="/css/open-sans.css" rel="stylesheet">
-  <link href="/css/jquery-ui.css" rel="stylesheet">
-  <link href="/css/bootstrap.css" rel="stylesheet">
-  <link href="/css/select2.min.css" rel="stylesheet">
-  <link href="/css/select2-bootstrap.css" rel="stylesheet">
-  <link href="/css/rickshaw.min.css" rel="stylesheet">
+    <link href="/css/open-sans.css" rel="stylesheet">
+    <link href="/css/jquery-ui.css" rel="stylesheet">
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/awesome-bootstrap-checkbox.css" rel="stylesheet">
+    <link href="/css/select2.min.css" rel="stylesheet">
+    <link href="/css/select2-bootstrap.css" rel="stylesheet">
+    <link href="/css/rickshaw.min.css" rel="stylesheet">
 
-  <link href="/css/jquery.timepicker.css" rel="stylesheet">
-  <link href="/css/custom.css" rel="stylesheet">
-  <link href="/css/spinner.css" rel="stylesheet">
+    <link href="/css/jquery.timepicker.css" rel="stylesheet">
+    <link href="/css/custom.css" rel="stylesheet">
+    <link href="/css/spinner.css" rel="stylesheet">
+    <link href="/css/tooltipster.css" rel="stylesheet">
+    <link href="/css/themes/tooltipster-shadow.css" rel="stylesheet">
 
-  <script src="/js/lib/jquery-2.1.3.js"></script>
-  <script src="/js/lib/jquery-ui.js"></script>
-  <script src="/js/lib/jquery.timepicker.js"></script>
-  <script src="/js/lib/bootstrap.js"></script>
-  <script src="/js/lib/select2.min.js"></script>
-  <script src="/js/spinner.js"></script>
-  <script src="/js/lib/d3.js"></script>
-  <script src="/js/parser.js"></script>
-  <script  src="/js/lib/rickshaw.js"></script>
-  <script src="/js/localStorageManager.js"></script>
-  <script src="/js/navigation.js"></script>
+    <script src="/js/lib/jquery-2.1.3.js"></script>
+    <script src="/js/lib/jquery-ui.js"></script>
+    <script src="/js/lib/jquery.timepicker.js"></script>
+    <script src="/js/lib/bootstrap.js"></script>
+    <script src="/js/lib/select2.min.js"></script>
+    <script src="/js/lib/jquery.tooltipster.min.js"></script>
+    <script src="/js/spinner.js"></script>
+    <script src="/js/lib/d3.js"></script>
+    <script src="/js/parser.js"></script>
+    <script src="/js/lib/rickshaw.js"></script>
+    <script src="/js/localStorageManager.js"></script>
+    <script src="/js/navigation.js"></script>
 </head>
 
 <body>
 
-    <div id="load-spinner"></div>
-    <div role="tabpanel" class="full-height">
+<div id="load-spinner"></div>
+<div role="tabpanel" class="full-height">
 
 
-      <div class="container-fluid full-height">
-      <div class="row full-height">
-        <div class="col-xs-2 full-height sidebar-buttons-column">
-          <!-- Nav tabs -->
-          <div class="full-height" role="tablist" id="mainTabList">
+    <div class="container-fluid full-height">
+        <div class="row full-height">
+            <div class="col-xs-2 full-height sidebar-buttons-column">
+                <!-- Nav tabs -->
+                <div class="full-height" role="tablist" id="mainTabList">
 
-            <div class="vertical-center-wrapper">
-              <div role="presentation" class="active sidebar-button horizontal-text-center vertical-center-outer" id="node-button">
-                <a href="#nodes" aria-controls="home" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-link sidebar-icon" aria-hidden="true"></span><br>Nodes</a>
-              </div>
-            </div>
+                    <div class="vertical-center-wrapper">
+                        <div role="presentation"
+                             class="active sidebar-button horizontal-text-center vertical-center-outer"
+                             id="node-button">
+                            <a href="#nodes" aria-controls="home" role="tab" data-toggle="tab"><span
+                                    class="glyphicon glyphicon-link sidebar-icon"
+                                    aria-hidden="true"></span><br>Nodes</a>
+                        </div>
+                    </div>
 
-            <div class="vertical-center-wrapper">
-              <div role="presentation" class="sidebar-button horizontal-text-center vertical-center-outer" id="timeline-button">
-                <a href="#timeline" aria-controls="profile" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-calendar sidebar-icon" aria-hidden="true"></span><br>Timeline</a>
-              </div>
-            </div>
+                    <div class="vertical-center-wrapper">
+                        <div role="presentation" class="sidebar-button horizontal-text-center vertical-center-outer"
+                             id="timeline-button">
+                            <a href="#timeline" aria-controls="profile" role="tab" data-toggle="tab"><span
+                                    class="glyphicon glyphicon-calendar sidebar-icon" aria-hidden="true"></span><br>Timeline</a>
+                        </div>
+                    </div>
 
-            <div class="vertical-center-wrapper">
-              <div role="presentation" class="sidebar-button horizontal-text-center vertical-center-outer" id="history-analysis-button">
-                <a href="#history-analysis" aria-controls="messages" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-stats sidebar-icon" aria-hidden="true"></span><br>History Analysis</a>
-              </div>
-            </div>
+                    <div class="vertical-center-wrapper">
+                        <div role="presentation" class="sidebar-button horizontal-text-center vertical-center-outer"
+                             id="history-analysis-button">
+                            <a href="#history-analysis" aria-controls="messages" role="tab" data-toggle="tab"><span
+                                    class="glyphicon glyphicon-stats sidebar-icon" aria-hidden="true"></span><br>History
+                                Analysis</a>
+                        </div>
+                    </div>
 
-            <div class="vertical-center-wrapper">
-              <div role="presentation" class="sidebar-button horizontal-text-center vertical-center-outer" id="distractions-analysis-button">
-                <a href="#distractions-analysis" aria-controls="messages" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-align-justify sidebar-icon" aria-hidden="true"></span><br>Distractions Analysis</a>
-              </div>
-            </div>
+                    <div class="vertical-center-wrapper">
+                        <div role="presentation" class="sidebar-button horizontal-text-center vertical-center-outer"
+                             id="distractions-analysis-button">
+                            <a href="#distractions-analysis" aria-controls="messages" role="tab" data-toggle="tab"><span
+                                    class="glyphicon glyphicon-align-justify sidebar-icon"
+                                    aria-hidden="true"></span><br>Distractions Analysis</a>
+                        </div>
+                    </div>
 
-            <div class="vertical-center-wrapper">
-              <div role="presentation" class="sidebar-button horizontal-text-center vertical-center-outer" id="banlist-button">
-                <a href="#banlist" aria-controls="settings" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-remove-circle sidebar-icon" aria-hidden="true"></span><br>Banlist</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-xs-10 remove-lr-padding">
-          <!-- Tab panes -->
-          <div class="tab-content" id="main-tab-content">
-
-            <div class="timeframe-selector">
-              <div class="form-inline display-none pull-right" id="custom-time-frame">
-                <div class="form-group">
-                  <label>From</label> <input type="text" id="custom-time-from">
-                  <label>To</label> <input type="text"  id="custom-time-to">
-                  <button id="set-custom-timeframe" class="btn btn-primary">Set</button>
+                    <div class="vertical-center-wrapper">
+                        <div role="presentation" class="sidebar-button horizontal-text-center vertical-center-outer"
+                             id="banlist-button">
+                            <a href="#banlist" aria-controls="settings" role="tab" data-toggle="tab"><span
+                                    class="glyphicon glyphicon-remove-circle sidebar-icon"
+                                    aria-hidden="true"></span><br>Banlist</a>
+                        </div>
+                    </div>
                 </div>
-              </div>
-
-              <select class="form-control pull-right" id="timeframe-select">
-                <option value="1">Day</option>
-                <option value="7">Week</option>
-                <option value="30">Month</option>
-                <option value="365">Year</option>
-                <option value="custom">Custom</option>
-              </select>
-
-              <select class="form-control pull-right" id="domainfilter-select">
-                <option value="0">#nofilter</option>
-                <option value="1">Exclude Search Engines</option>
-              </select>
             </div>
 
-            <div role="tabpanel" class="tab-pane fade in active" id="nodes">Placeholder</div>
-            <div role="tabpanel" class="tab-pane fade" id="timeline">Placeholder</div>
-            <div role="tabpanel" class="tab-pane fade" id="history-analysis">Placeholder History</div>
-            <div role="tabpanel" class="tab-pane fade" id="distractions-analysis">Placeholder Distractions</div>
-            <div role="tabpanel" class="tab-pane fade" id="banlist">Placeholder Banlists</div>
-          </div>
+            <div class="col-xs-10 remove-lr-padding">
+                <!-- Tab panes -->
+                <div class="tab-content" id="main-tab-content">
+
+                    <div class="timeframe-selector">
+                        <div class="form-inline display-none pull-right" id="custom-time-frame">
+                            <div class="form-group">
+                                <label>From</label> <input type="text" id="custom-time-from">
+                                <label>To</label> <input type="text" id="custom-time-to">
+                                <button id="set-custom-timeframe" class="btn btn-primary">Set</button>
+                            </div>
+                        </div>
+
+                        <select class="form-control pull-right" id="timeframe-select">
+                            <option value="1">Day</option>
+                            <option value="7">Week</option>
+                            <option value="30">Month</option>
+                            <option value="365">Year</option>
+                            <option value="custom">Custom</option>
+                        </select>
+
+                        <select class="form-control pull-right" id="domainfilter-select">
+                            <option value="0">#nofilter</option>
+                            <option value="1">Exclude Search Engines</option>
+                        </select>
+                    </div>
+                    <div class="form-group pull-right">
+                        <div class="checkbox checkbox-info">
+                            <input type="checkbox" id="tooltips-enabled">
+                            <label for="tooltips-enabled">
+                                Tooltips
+                            </label>
+                        </div>
+                        <a href="#" data-toggle="modal" data-target="#tutorialModal">Tutorial</a>
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane fade in active" id="nodes">Placeholder</div>
+                    <div role="tabpanel" class="tab-pane fade" id="timeline">Placeholder</div>
+                    <div role="tabpanel" class="tab-pane fade" id="history-analysis">Placeholder History</div>
+                    <div role="tabpanel" class="tab-pane fade" id="distractions-analysis">Placeholder Distractions</div>
+                    <div role="tabpanel" class="tab-pane fade" id="banlist">Placeholder Banlists</div>
+                </div>
+            </div>
         </div>
-
-    </div>
     </div>
 
-  </div>
+</div>
+
+<!-- Tutorial Modal -->
+<div class="modal fade" id="tutorialModal" tabindex="-1" role="dialog" aria-labelledby="tutorialModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width:80%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="tutorialModalLabel">Tutorial</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 
