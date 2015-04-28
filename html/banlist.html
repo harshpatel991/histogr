@@ -3,7 +3,6 @@
 <hr>
 
 
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
@@ -11,25 +10,36 @@
 
 
             <h2>Restricted Domains</h2>
+
             <form class="form-inline">
-                <input type="text" id="restricted-domain" class="form-control" placeholder="Add Restricted URL">
+                <select id="restricted-domain" class="form-control select2" style="width:400px">
+                    <option></option>
+                </select>
 
-                <input id="restricted-domain-from" type="text" class="time ui-timepicker-input form-control" autocomplete="off" placeholder="From">
+                <input id="restricted-domain-from" type="text" class="time ui-timepicker-input form-control"
+                       autocomplete="off" placeholder="From">
 
-                <input id="restricted-domain-to" type="text" class="time ui-timepicker-input form-control" autocomplete="off" placeholder="To">
+                <input id="restricted-domain-to" type="text" class="time ui-timepicker-input form-control"
+                       autocomplete="off" placeholder="To">
 
-                <button type="button" class="btn btn-primary" id="submit-restricted"><span class="glyphicon glyphicon-plus"></span> Add</button>
+                <button type="button" class="btn btn-primary" id="submit-restricted"><span
+                        class="glyphicon glyphicon-plus"></span> Add
+                </button>
             </form>
 
             <hr>
             <div id="restricted-domains-list"></div>
 
             <h2>Distractions</h2>
-            <form class="form-inline">
-                <input type="text" id="distracting-domain" class="form-control" placeholder="Add Distraction URL">
-                <button type="button" class="btn btn-primary" id="submit-distracting"><span class="glyphicon glyphicon-plus"></span> Add</button>
-            </form>
 
+            <div class="input-group">
+                <select id="distracting-domain" class="form-control select2" style="width:400px">
+                    <option></option>
+                </select>
+                <button type="button" class="btn btn-primary" id="submit-distracting"><span
+                        class="glyphicon glyphicon-plus"></span> Add
+                </button>
+            </div>
             <hr>
             <div id="distracting-domains-list"></div>
 

@@ -15,6 +15,36 @@ $('#restricted-domain-to').timepicker();
 $("#submit-restricted").click(addRestrictedDomain);
 $("#submit-distracting").click(addDistractingDomainFromTextBox);
 
+$('#distracting-domain').select2({
+    placeholder: 'Add Distraction URL'
+});
+
+$('#restricted-domain').select2({
+    placeholder: 'Add Restricted URL'
+});
+
+
+
+$(function () {
+    document.addEventListener('parse', function (value) {
+        changeSelectOptions(value.detail.parsedDomainHistory);
+    });
+});
+
+function changeSelectOptions(domainHistory){
+    domainHistory.sort(function(a,b){return a.name.localeCompare(b.name);});
+    var optHtml = '<option></option>';
+    for (var i in domainHistory){
+        var historyItem = domainHistory[i];
+        if (historyItem.domainType != 'distraction'){
+            optHtml += '<option>' + historyItem.name + '</option>';
+        }
+    }
+    $('#distracting-domain').html(optHtml);
+    $('#restricted-domain').html(optHtml);
+}
+
+
 //Called when clicking restricted domain button
 function addRestrictedDomain() {
     $('#banlist-error-box').html("");//clear out error box
@@ -27,7 +57,7 @@ function addRestrictedDomain() {
 
     if(urlToBlock != '' && timeFrom != '' && timeFrom.match(timeRegExp) && timeTo != '' && timeTo.match(timeRegExp)) {
 
-        $('#restricted-domain').val(""); //clear the boxes
+        $('#restricted-domain').select2("val", ""); //clear the box
         $('#restricted-domain-from').val("");
         $('#restricted-domain-to').val("");
 
@@ -58,7 +88,7 @@ function addDistractingDomainFromTextBox() {
     var urlMarkAsDistracting = $('#distracting-domain').val();
 
     if(urlMarkAsDistracting != '') {
-        $('#distracting-domain').val(""); //clear the box
+        $('#distracting-domain').select2("val", ""); //clear the box
         addDistractingDomain(urlMarkAsDistracting);
     }
     else {
