@@ -58,6 +58,10 @@ function onAllTabsLoaded(){
     }
   }, false);
 
+  $('#tutorialCarousel').carousel({
+    interval: false
+  });
+
   var microsecondsInTimeSpan = 1000 * 60 * 60 * 24;
   var timeNow = (new Date).getTime();
   var timeYesterday = timeNow - microsecondsInTimeSpan;
@@ -65,7 +69,7 @@ function onAllTabsLoaded(){
   Parser.parseHistoryFromSpan(timeYesterday, timeNow);
 
   var $tooltipsCheckbox = $('#tooltips-enabled');
-  $('.mytooltip').tooltipster({
+  $('.tutorial-tootlip').tooltipster({
     theme: '.tooltipster-shadow',
     animation: 'grow'
   });
@@ -85,6 +89,6 @@ function onAllTabsLoaded(){
 }
 
 function changeToolTips(enabled){
-  $('.mytooltip').tooltipster(enabled ? 'enable' : 'disable');
+  $('.tutorial-tootlip').tooltipster(enabled ? 'enable' : 'disable');
   addSingleKeyToStorage('tooltipsEnabled', enabled, function(){});
 }
