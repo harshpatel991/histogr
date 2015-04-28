@@ -1,5 +1,5 @@
 var relationTimeSpan = 1000 * 60 * 15; //15 minutes
-var goldenLinkRatio = 0.7;
+var goldenLinkRatio = 1.5;
 
 function HistoryVisitItem(domainId, domainName, visitTime){
     this.domainId = domainId;

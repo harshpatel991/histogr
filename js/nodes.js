@@ -1,3 +1,5 @@
+//Graph adapted from d3.js Sticky Force Layout guide http://bl.ocks.org/mbostock/3750558
+
 //On clicking the banlist side bar button, refresh the lists
 $("#node-button").click(function () {
     $('#mainTabList a[href="#nodes"]').tab('show');
@@ -10,7 +12,6 @@ $(function () {
         generateNodesGraph(getNodeGraphData(value.detail.parsedDomainHistory), ".nodes-chart")
     });
 });
-
 
 var goldenSizeRatio = 10;
 
@@ -48,9 +49,8 @@ function getNodeGraphData(domainHistory) {
     var avgFreq = totalFreq / totalItems;
     for (i in graphData.nodes) {
         graphData.nodes[i].size *= goldenSizeRatio / avgFreq;
-        if (graphData.nodes[i].size > 50) {
-            graphData.nodes[i].size = 50;
-        }
+
+        graphData.nodes[i].size = ((Math.log(graphData.nodes[i].size) +1)/2.5) * 10
     }
     return graphData;
 }
@@ -59,14 +59,18 @@ function getNodeGraphData(domainHistory) {
 function generateNodesGraph(graphData, divSelector) {
     var margin = {top: 20, right: 20, bottom: 100, left: 40};
     $(divSelector).html('');
-//Adapted from d3.js Sticky Force Layout guide http://bl.ocks.org/mbostock/3750558
-    var width = 500,
-        height = 250;
+
+    var width = 700,
+        height = 450;
 
     var force = d3.layout.force()
         .size([width, height])
-        .charge(-100)
-        .linkDistance(50)
+        .charge(function(d) {
+            console.log(d);
+            return -1* d.size*10;
+        })
+        .linkDistance(function(d) { return (d.source.size + d.target.size) * 4;})
+        .gravity(.05)
         .on("tick", tick);
 
     var drag = force.drag()
@@ -80,9 +84,8 @@ function generateNodesGraph(graphData, divSelector) {
             closeToolTip();
         })
         .attr("viewBox", "0 0 960 500");
-    //.attr("preserveAspectRatio", "xMinYMin");
 
-//Fade nodes into view
+    //Fade nodes into view
     svg.style("opacity", 1e-6)
         .transition()
         .duration(1500)
@@ -94,14 +97,13 @@ function generateNodesGraph(graphData, divSelector) {
     var tooltip = d3.select(".nodes-chart")
         .append("div")
         .attr("class", "nodes-tooltip")
-        .style("position", "absolute")
-        .style("z-index", "10")
-        .style("visibility", "hidden")
         .text("a simple tooltip");
 
     force.nodes(graphData.nodes)
         .links(graphData.links)
         .start();
+
+    console.log(graphData.links);
 
     link = link.data(graphData.links)
         .enter().append("line")
@@ -109,17 +111,18 @@ function generateNodesGraph(graphData, divSelector) {
 
     node = node.data(graphData.nodes)
         .enter().append("circle")
-        .attr("r", function (d) {
+        .attr("r", function (d) { //set size for each node to the value read from json
             return d.size * 2;
-        }) //set size for each node to the value read from json
+        })
         .attr("class", "node")
-        .on("click", function (d) {
-            clickNode(d);
-            d3.event.stopPropagation();
-        }) //don't let propigation move to outside svg
+        .on("contextmenu", function (d) {
+            rightClickNode(d);
+            d3.event.stopPropagation(); //don't let propigation move to outside svg
+            d3.event.preventDefault();
+        })
         .call(drag);
 
-    function clickNode(data) {
+    function rightClickNode(data) {
         var parentOffset = $('.nodes-chart').parent().offset(); //calculate where the tool tip needs to appear
         var relX = event.pageX - parentOffset.left;
         var relY = event.pageY - parentOffset.top;
@@ -131,8 +134,8 @@ function generateNodesGraph(graphData, divSelector) {
                 toolTipBox += '<button class="btn btn-primary btn-xs center-block" id="nodesAddAsDistraction"><span class="glyphicon glyphicon-plus"></span> Add as Distraction</button></div> </div>';
                 tooltip.style("visibility", "visible")
                     .html(toolTipBox)
-                    .style("top", (relY) + "px")
-                    .style("left", (relX + 10) + "px");
+                    .style("top", (relY+20) + "px")
+                    .style("left", (relX) + "px");
                 $("#nodesAddAsDistraction").click(function () {
                     addDistractingDomain(data.domain);
                     closeToolTip();
@@ -155,27 +158,27 @@ function generateNodesGraph(graphData, divSelector) {
         link.attr("x1", function (d) {
             return d.source.x;
         })
-            .attr("y1", function (d) {
-                return d.source.y;
-            })
-            .attr("x2", function (d) {
-                return d.target.x;
-            })
-            .attr("y2", function (d) {
-                return d.target.y;
-            });
+        .attr("y1", function (d) {
+            return d.source.y;
+        })
+        .attr("x2", function (d) {
+            return d.target.x;
+        })
+        .attr("y2", function (d) {
+            return d.target.y;
+        });
 
         node.attr("cx", function (d) {
             return d.x;
         })
-            .attr("cy", function (d) {
-                return d.y;
-            });
+        .attr("cy", function (d) {
+            return d.y;
+        });
     }
 
 //When starting to drag, set the node as fixed
     function dragstart(d) {
-        d3.select(this).classed("fixed", d.fixed = true);
+        //d3.select(this).classed("fixed", d.fixed = true);
     }
 
 //Resize on window size change, keep aspect ratio

@@ -109,7 +109,7 @@ h4 {
 /*Node Page Styling*/
 .link {
   stroke: #cacaca;
-  stroke-width: 1.5px;
+  stroke-width: 1px;
 }
 
 .node {
@@ -124,7 +124,10 @@ h4 {
 }
 
 .nodes-tooltip {
+  position: absolute;
   background-color: #e4e4e4;
+  z-index: 10;
+  visibility: hidden;
 }
 
 .green {
