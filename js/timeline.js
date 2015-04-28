@@ -6,10 +6,13 @@ $("#timeline-button").click(function() {
 
 $(function() {
     document.addEventListener('parse', function(value) {
-        generateTimeline(value.detail.entireHistory)
+    	current_history_data = value.detail.entireHistory;
+        generateTimeline(value.detail.entireHistory);
     });
 });
 
+var graph = null;
+var current_history_data;
 
 function getDayMinutes(date) {
     return date.getUTCHours() * 60 + date.getUTCMinutes();
@@ -26,10 +29,19 @@ function getTimeString(d) {
 }
 
 function clearGraph(){
-	$('#timeline-container').empty();
+
 	$('#timeline-container').html(
     '<div id="preview" style="margin-top:10px;"></div><div id="timeline-chart"></div>'
   );
+}
+
+function searchSeries(series, x){
+	for(var i = 0; i<series.length; i++ ){
+		if(series[i].x == x){
+			return series[i].z;
+		}
+	}
+	
 }
 
 function generateTimeline(data) {
@@ -39,15 +51,16 @@ function generateTimeline(data) {
 
     var rev_data = [];
 
-    for (var i = 0; i < data.length; i++) {
+     for (var i = 0; i < data.length; i++) {
         var obj = data[i];
         var d = new Date(obj.visitTime);
 
         rev_data.push({
             x: d.getTime(),
-            y: getDayMinutes(d)
+            y: getDayMinutes(d),
+            z: obj.domainName
         });
-
+		
     }
 
 
@@ -64,6 +77,8 @@ function generateTimeline(data) {
         }]
     });
 
+   
+
     var xAxis = new Rickshaw.Graph.Axis.X({
         graph: graph,
         tickFormat: function(x) {
@@ -79,31 +94,26 @@ function generateTimeline(data) {
     })
 
     var hoverDetail = new Rickshaw.Graph.HoverDetail( {
-            graph: graph,
-            xFormatter: function(x) {
-				return new Date(x).toLocaleDateString();
-			}
-        } );
+		graph: graph,
+		formatter:function(series, x, y, z){
+			return searchSeries(series.data, x);
+			//return z;
+		}
+	} );
+
+    
 
     xAxis.render();
     yAxis.render();
     graph.render();
 
 
-    var annotator = new Rickshaw.Graph.Annotate({
-        graph: graph,
-        element: document.getElementById('timeline-chart')
-    });
-
+    
     
 
-    for (var i = 0; i < data.length; i++) {
-        var obj = data[i];
-        var d = new Date(obj.visitTime);
+   
 
-        annotator.add(d.getTime(), obj.domainName)
-
-    }
+    
 
     var preview = new Rickshaw.Graph.RangeSlider( {
 		graph: graph,
@@ -124,7 +134,7 @@ function generateTimeline(data) {
 
 	
 
-    graph.renderer.dotSize = 6;
+    graph.renderer.dotSize = 3;
 
 	//previewXAxis.render();
     graph.render();
