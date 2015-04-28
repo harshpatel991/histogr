@@ -6,6 +6,7 @@ $("#banlist-button").click(function() {
     $('#mainTabList a[href="#banlist"]').tab('show')
     listRestrictedDomains();
     listDistractingDomains();
+    hideTimeFrameSelector();
 });
 
 $("#submit-restricted").click(addRestrictedDomain);

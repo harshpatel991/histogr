@@ -13,6 +13,8 @@ $(function() {
     timeFrameSlectorScript.src = '/js/timeFrameSelector.js';
     document.head.appendChild(timeFrameSlectorScript);
 
+
+
     // Load timeline
     $("#timeline").load("/html/timeline.html", function () {
       var script = document.createElement('script'); //done loading the HTML, load the corresponding JS

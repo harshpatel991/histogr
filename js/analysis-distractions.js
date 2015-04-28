@@ -1,6 +1,7 @@
 //On clicking the timelline side bar button
 $("#distractions-analysis-button").click(function() {
-    $('#mainTabList a[href="#distractions-analysis"]').tab('show')
+    $('#mainTabList a[href="#distractions-analysis"]').tab('show');
+    showTimeFrameSelector();
 });
 
 

@@ -1,9 +1,7 @@
 //On clicking the banlist side bar button, refresh the lists
 $("#node-button").click(function () {
     $('#mainTabList a[href="#nodes"]').tab('show');
-    //listRestrictedDomains();
-    //listDistractingDomains();
-    //closeToolTip();
+    showTimeFrameSelector();
 });
 
 // Run when this tab is finished loading
@@ -127,7 +125,7 @@ function generateNodesGraph(graphData, divSelector) {
         var relY = event.pageY - parentOffset.top;
 
         existsInStorage("distractingDomains", data.domain, function (exists) { //determine what text needs to be in the tool tip
-            var toolTipBox = '<div class="panel panel-default"> <div class="panel-heading"> <h3 class="panel-title">' + data.domain + ' <button class="btn btn-danger btn-xs" id="close-tooltip"><span class="glyphicon glyphicon-remove"></span></button></h3> </div> <div class="panel-body">Size: ' + data.size + '<br/>id: ' + data.id + '<br/>type: ' + data.domainType + '<hr>';
+            var toolTipBox = '<div class="panel panel-default"> <div class="panel-heading"> <h3 class="panel-title">' + data.domain + ' <button class="btn btn-danger btn-xs pull-right" id="close-tooltip"><span class="glyphicon glyphicon-remove"></span></button></h3> </div> <div class="panel-body">Size: ' + data.size + '<br/>id: ' + data.id + '<br/>type: ' + data.domainType + '<hr>';
 
             if (!exists) {
                 toolTipBox += '<button class="btn btn-primary btn-xs center-block" id="nodesAddAsDistraction"><span class="glyphicon glyphicon-plus"></span> Add as Distraction</button></div> </div>';

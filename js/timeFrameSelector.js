@@ -1,3 +1,7 @@
+$(function() { //position the time frame selector
+    $('.timeframe-selector').offset({ top: $('#title-bottom').offset().top+10 });
+});
+
 $(function() {
     $( "#custom-time-from" ).datepicker(); //initialize date picker
 });
@@ -37,3 +41,12 @@ function timeFrameChange(startDate, endDate) {
     console.log("Time frame has changed. Start date: " + startDate + " End date: " + endDate);
     Parser.parseHistoryFromSpan(startDate.getTime(), endDate.getTime(), filterVal);
 }
+
+function hideTimeFrameSelector() {
+    $( ".timeframe-selector" ).hide();
+}
+
+function showTimeFrameSelector() {
+    $( ".timeframe-selector" ).fadeIn("slow", 'linear');
+}
+
