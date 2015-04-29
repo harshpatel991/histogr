@@ -134,6 +134,9 @@ function buildTypedUrlList(startTime, endTime, filter) {
         // of URLs to show in the popup.
         if (!--numRequestsOutstanding) {
             retrieveFromStorage('distractingDomains', function(distractions){
+                if (distractions === undefined){
+                    distractions = [];
+                }
                 for (var i = 0; i < distractions.length; i++){
                     var domainKey = distractions[i];
                     console.log(domainKey);
@@ -188,7 +191,7 @@ function buildTypedUrlList(startTime, endTime, filter) {
                 var linkFreq = historyItem.outgoingLinks[j];
                 if (linkFreq > goldenLinkRatio * totalLinks / totalItems) {
                     historyItem.outgoingRelations.push(j);
-                    if (parsedDomainHistory[j].domainType === 'distraction') {
+                    if (parsedDomainHistory[j].domainType === 'distraction' && historyItem.domainType != 'trigger') {
                         historyItem.domainType = 'trigger';
                     }
                 }

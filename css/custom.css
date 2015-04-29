@@ -154,4 +154,16 @@ h4 {
   /*position: absolute;*/
 }
 
-/*History Analysis Page Styling*/
+#tutorialArrowImg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 450px;
+  color: #46b8df;
+}
+
+.tutorialArrowBackground{
+  opacity: 0;
+  -webkit-transition: opacity 1.25s linear;
+  transition: opacity 1.25s linear;
+}

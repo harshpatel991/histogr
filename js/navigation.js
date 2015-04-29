@@ -65,6 +65,10 @@ function onAllTabsLoaded(){
     interval: false
   });
 
+  $('#clear-storage-btn').click(function(){
+    clearLocalStorage();
+  });
+
   var microsecondsInTimeSpan = 1000 * 60 * 60 * 24;
   var timeNow = (new Date).getTime();
   var timeYesterday = timeNow - microsecondsInTimeSpan;
@@ -81,6 +85,31 @@ function onAllTabsLoaded(){
     changeToolTips($(this).is(":checked"));
   });
 
+  $('#welcomeModal').on('hidden.bs.modal', function(){
+    addSingleKeyToStorage('shouldShowWelcome', false);
+  });
+
+  $('#tutorialModal').on('hidden.bs.modal', function(){
+    showTutorialArrowIfNeeded();
+  });
+
+  $('#welcomeModal-btn-yes').on('click', function(){
+    $('#welcomeModal').modal('hide');
+    $('#tutorialModal').modal('show');
+  });
+
+  $('#welcomeModal-btn-no').on('click', function(){
+    $('#welcomeModal').modal('hide');
+    showTutorialArrowIfNeeded();
+  });
+
+  retrieveFromStorage('shouldShowWelcome', function(value){
+    if (value == undefined || value == true){
+      $('#welcomeModal').modal('show');
+    }
+  });
+
+
   retrieveFromStorage('tooltipsEnabled', function(enabled){
     console.log('storage: ' + enabled);
     if (enabled === undefined){
@@ -94,4 +123,22 @@ function onAllTabsLoaded(){
 function changeToolTips(enabled){
   $('.tutorial-tootlip').tooltipster(enabled ? 'enable' : 'disable');
   addSingleKeyToStorage('tooltipsEnabled', enabled, function(){});
+}
+
+function showTutorialArrowIfNeeded(){
+  retrieveFromStorage('shouldShowArrow', function(value){
+    if (value == undefined || value == true){
+      var $tutorialArrow = $('#tutorialArrowImg');
+      var helpBoxOffset = $('#help-box-container').offset();
+      var offsetLeft = helpBoxOffset.left - $tutorialArrow.width() - 10;
+      var offsetTop = helpBoxOffset.top - 35;
+      $tutorialArrow.offset({top: offsetTop, left: offsetLeft});
+      $('#tutorialArrowModal').modal('show');
+      addSingleKeyToStorage('shouldShowArrow', false, function(){});
+    }
+  });
+}
+
+function clearLocalStorage(){
+  chrome.storage.local.clear(function(){console.log('cleared all data');});
 }

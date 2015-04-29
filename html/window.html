@@ -105,6 +105,7 @@
                     <h4 class="horizontal-text-center" id="page-sub-title">A graphical representation of the websites you visit.</h4>
                     <hr id="title-bottom" style="margin-bottom: 0px;">
 
+                    <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-9">
 
@@ -112,7 +113,7 @@
                             <div class="timeframe-selector">
 
 
-                                <select class="form-control" style="display: inline-block;" id="domainfilter-select">
+                                <select class="form-control" style="display: inline-block; margin-left: 5px; margin-top: 3px" id="domainfilter-select">
                                     <option value="0">#nofilter</option>
                                     <option value="1">Exclude Search Engines</option>
                                 </select>
@@ -144,10 +145,12 @@
                                     <label for="tooltips-enabled">Tooltips </label> |
                                 </div>
                                 <a class="btn btn-info btn-xs" style="margin-right: 10px" href="#" data-toggle="modal" data-target="#tutorialModal">Open Tutorial</a>
+                                <button id="clear-storage-btn" class="btn btn-danger btn-xs" style="margin-right: 10px" href="#">Clear Local Storage</button>
                             </div>
 
                         </div>
                     </div>
+                        </div>
 
 
                     <div role="tabpanel" class="tab-pane fade in active" id="nodes">
@@ -172,7 +175,12 @@
     </div>
 
 </div>
-
+<div id="tutorialArrowModal" class=" modal fade tutorialArrowBackground">
+<div id="tutorialArrowImg">
+<img src="../images/blue_arrow.png" width="450px">
+    <h3>TIP: Toggle tooltips and watch tutorial here</h3>
+</div>
+    </div>
 <!-- Tutorial Modal -->
 <div class="modal fade" id="tutorialModal" tabindex="-1" role="dialog" aria-labelledby="tutorialModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" style="width:80%">
@@ -222,6 +230,24 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tutorial Modal -->
+<div class="modal fade" id="welcomeModal" tabindex="-1" role="dialog" aria-labelledby="welcomeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="welcomeModalLabel">Welcome</h4>
+            </div>
+            <div class="modal-body">
+                Welcome to Histo.gr! Since this is your first time visiting, would you like to view the tutorial?
+            </div>
+            <div class="modal-footer">
+                <button id="welcomeModal-btn-no" type="button" class="btn btn-info">No Thanks</button>
+                <button id="welcomeModal-btn-yes" type="button" class="btn btn-success">Yes Please</button>
             </div>
         </div>
     </div>

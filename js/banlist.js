@@ -34,15 +34,17 @@ $(function () {
 
 function changeSelectOptions(domainHistory){
     domainHistory.sort(function(a,b){return a.name.localeCompare(b.name);});
-    var optHtml = '<option></option>';
+    var restrictOptHtml = '<option></option>';
+    var distractionOptHtml = '<option></option>';
     for (var i in domainHistory){
         var historyItem = domainHistory[i];
+        restrictOptHtml += '<option>' + historyItem.name + '</option>';
         if (historyItem.domainType != 'distraction'){
-            optHtml += '<option>' + historyItem.name + '</option>';
+            distractionOptHtml += '<option>' + historyItem.name + '</option>';
         }
     }
-    $('#distracting-domain').html(optHtml);
-    $('#restricted-domain').html(optHtml);
+    $('#distracting-domain').html(distractionOptHtml);
+    $('#restricted-domain').html(restrictOptHtml);
 }
 
 
