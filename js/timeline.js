@@ -15,10 +15,13 @@ var graph = null;
 var current_history_data;
 
 function getDayMinutes(date) {
+    //return 5;
+    //return Math.random()*10;
     return date.getUTCHours() * 60 + date.getUTCMinutes();
 }
 
 function getTimeString(d) {
+    //return "";
     hour = Math.round(d / 60);
     minutes = d % 60;
     if (hour > 12) {
@@ -50,7 +53,7 @@ function generateTimeline(data) {
 	clearGraph();
 
     var rev_data = [];
-
+    
      for (var i = 0; i < data.length; i++) {
         var obj = data[i];
         var d = new Date(obj.visitTime);
