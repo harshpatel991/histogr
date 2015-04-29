@@ -71,7 +71,9 @@ function createGraph(historyData) {
         svg.selectAll(".bar")
             .data(historyData)
             .enter().append("rect")
-            .attr("class", "bar")
+            .attr("class", function (d){
+                return "bar type-"+ d.domainType;
+            })
             .attr("x", function (d) {
                 return x(d.name);
             })

@@ -167,3 +167,19 @@ h4 {
   -webkit-transition: opacity 1.25s linear;
   transition: opacity 1.25s linear;
 }
+
+.help-icon{
+  color: #31b0d5;
+  font-size: 18px;
+}
+
+/* Graph type colors */
+.type-other{
+  fill: #3e79d6;
+}
+.type-distraction{
+  fill: #F2517F;
+}
+.type-trigger{
+  fill: #9253a0;
+}

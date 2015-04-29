@@ -122,6 +122,12 @@ function onAllTabsLoaded(){
 
 function changeToolTips(enabled){
   $('.tutorial-tootlip').tooltipster(enabled ? 'enable' : 'disable');
+  if (enabled){
+    $('.help-icon').removeClass('hidden');
+  }
+  else{
+    $('.help-icon').addClass('hidden');
+  }
   addSingleKeyToStorage('tooltipsEnabled', enabled, function(){});
 }
 

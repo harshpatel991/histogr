@@ -122,7 +122,9 @@ function generateNodesGraph(graphData, divSelector) {
         .attr("r", function (d) { //set size for each node to the value read from json
             return d.size * 2;
         })
-        .attr("class", "node")
+        .attr("class", function(d){
+            return "node type-"+ d.domainType;
+        })
         .on("contextmenu", function (d) {
             rightClickNode(d);
             d3.event.stopPropagation(); //don't let propigation move to outside svg
