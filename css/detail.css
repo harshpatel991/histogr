@@ -6,10 +6,10 @@
 	background: rgba(0, 0, 0, 0.1);
 	bottom: 0;
 	width: 1px;
-	transition: opacity 0.25s linear;
+	/*transition: opacity 0.25s linear;
 	-moz-transition: opacity 0.25s linear;
 	-o-transition: opacity 0.25s linear;
-	-webkit-transition: opacity 0.25s linear;
+	-webkit-transition: opacity 0.25s linear;*/
 }
 .rickshaw_graph .detail.inactive {
 	opacity: 0;
@@ -17,7 +17,7 @@
 .rickshaw_graph .detail .item.active {
 	opacity: 1;
 }
-.rickshaw_graph .detail .x_label {
+/*.rickshaw_graph .detail .x_label {
 	font-family: Arial, sans-serif;
 	border-radius: 3px;
 	padding: 6px;
@@ -27,14 +27,14 @@
 	position: absolute;
 	background: white;
 	white-space: nowrap;
-}
+}*/
 .rickshaw_graph .detail .x_label.left {
 	left: 0;
 }
 .rickshaw_graph .detail .x_label.right {
 	right: 0;
 }
-.rickshaw_graph .detail .item {
+/*.rickshaw_graph .detail .item {
 	position: absolute;
 	z-index: 2;
 	border-radius: 3px;
@@ -49,7 +49,7 @@
 	margin-right: 1em;
 	margin-top: -1em;
 	white-space: nowrap;
-}
+}*/
 .rickshaw_graph .detail .item.left {
 	left: 0;
 }
@@ -84,7 +84,7 @@
 	border-left-color: rgba(0, 0, 0, 0.8);
 	border-right-width: 0;
 }
-.rickshaw_graph .detail .dot {
+/*.rickshaw_graph .detail .dot {
 	width: 4px;
 	height: 4px;
 	margin-left: -3px;
@@ -99,7 +99,7 @@
 	border-style: solid;
 	display: none;
 	background-clip: padding-box;
-}
+}*/
 .rickshaw_graph .detail .dot.active {
 	display: block;
 }
