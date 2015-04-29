@@ -59,7 +59,7 @@ function generateTimeline(data) {
         var d = new Date(obj.visitTime);
 
         rev_data.push({
-            x: d.getTime(),
+            x: d.getTime()/1000,
             y: getDayMinutes(d),
             z: obj.domainName
         });
@@ -85,7 +85,7 @@ function generateTimeline(data) {
     var xAxis = new Rickshaw.Graph.Axis.X({
         graph: graph,
         tickFormat: function(x) {
-            return new Date(x).toLocaleDateString();
+            return new Date(x*1000).toLocaleDateString();
         }
     })
 
