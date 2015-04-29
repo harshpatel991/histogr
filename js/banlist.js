@@ -65,6 +65,7 @@ function addRestrictedDomain() {
         appendToStorage("restrictedDomains", urlToBlock, function () {
             appendToStorage("restrictedDomainsTimeFrom", timeFrom, function () {
                 appendToStorage("restrictedDomainsTimeTo", timeTo, function () {
+                    chrome.runtime.sendMessage('backgroundUpdate');
                     console.log("saved: " + timeFrom + timeTo);
                     listRestrictedDomains();
                 });
@@ -142,6 +143,7 @@ function deleteRestrictedDomain(index) {
         pruneFromStorage("restrictedDomains", index, function() {
             pruneFromStorage("restrictedDomainsTimeFrom", index, function() {
                 pruneFromStorage("restrictedDomainsTimeTo", index, function() {
+                    chrome.runtime.sendMessage('backgroundUpdate');
                         listRestrictedDomains();
                 });
             });
