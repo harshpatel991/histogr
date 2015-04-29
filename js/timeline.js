@@ -17,7 +17,7 @@ var current_history_data;
 function getDayMinutes(date) {
     //return 5;
     //return Math.random()*10;
-    return date.getUTCHours() * 60 + date.getUTCMinutes();
+    return date.getHours() * 60 + date.getMinutes();
 }
 
 function getTimeString(d) {
