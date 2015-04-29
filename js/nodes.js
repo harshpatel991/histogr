@@ -3,8 +3,19 @@
 //On clicking the banlist side bar button, refresh the lists
 $("#node-button").click(function () {
     $('#mainTabList a[href="#nodes"]').tab('show');
-    showTimeFrameSelector();
+    fadeOutInToolBar();
+
+    setTitleText("Nodes", "A graphical representation of the websites you visit.");
+
 });
+
+function setTitleText(title, subtitle) {
+
+
+
+    fadeOutInItem($('#page-title'), function() { $('#page-title').html(title); });
+    fadeOutInItem($('#page-sub-title'), function() {$('#page-sub-title').html(subtitle);});
+}
 
 // Run when this tab is finished loading
 $(function () {

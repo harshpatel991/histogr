@@ -1,7 +1,8 @@
 //On clicking the timelline side bar button
 $("#history-analysis-button").click(function() {
     $('#mainTabList a[href="#history-analysis"]').tab('show');
-    showTimeFrameSelector();
+    fadeOutInToolBar();
+    setTitleText("History Analysis", "An analysis of your history.");
 });
 
 

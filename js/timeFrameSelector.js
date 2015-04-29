@@ -1,5 +1,5 @@
 $(function() { //position the time frame selector
-    $('.timeframe-selector').offset({ top: $('#title-bottom').offset().top+10 });
+    //$('.timeframe-selector').offset({ top: $('#title-bottom').offset().top+10 });
 });
 
 $(function() {
@@ -42,11 +42,23 @@ function timeFrameChange(startDate, endDate) {
     Parser.parseHistoryFromSpan(startDate.getTime(), endDate.getTime(), filterVal);
 }
 
+
 function hideTimeFrameSelector() {
-    $( ".timeframe-selector" ).hide();
+    $( ".timeframe-selector" ).addClass("display-none");
 }
 
 function showTimeFrameSelector() {
-    $( ".timeframe-selector" ).fadeIn("slow", 'linear');
+    $( ".timeframe-selector" ).removeClass("display-none")
 }
 
+function fadeOutInItem(selector, callback) {
+    var fadeTime = 100;
+    selector.fadeOut(fadeTime, function () {
+        callback();
+        selector.fadeIn(fadeTime);
+    });
+}
+function fadeOutInToolBar() {
+    fadeOutInItem($(".timeframe-selector"), function(){});
+    fadeOutInItem($("#help-box-container"), function(){});
+}

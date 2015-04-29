@@ -3,7 +3,7 @@
 
 $(function() {
   //Load nodes
-  $("#nodes").load("/html/nodes.html", function () {
+  $("#nodes-body").load("/html/nodes.html", function () {
     var script = document.createElement('script'); //done loading the HTML, load the corresponding JS
     script.src = '/js/nodes.js';
     document.head.appendChild(script);
@@ -14,23 +14,26 @@ $(function() {
     document.head.appendChild(timeFrameSlectorScript);
 
 
+    var helpBoxScript = document.createElement('script');
+    helpBoxScript.src = '/js/helpBox.js';
+    document.head.appendChild(helpBoxScript);
 
     // Load timeline
-    $("#timeline").load("/html/timeline.html", function () {
+    $("#timeline-body").load("/html/timeline.html", function () {
       var script = document.createElement('script'); //done loading the HTML, load the corresponding JS
       script.src = '/js/timeline.js';
       document.head.appendChild(script);
       console.log('timeline loaded');
 
         // Load analysis-history
-        $("#history-analysis").load("/html/analysis-history.html", function () { //load the history tab
+        $("#history-analysis-body").load("/html/analysis-history.html", function () { //load the history tab
           var scriptHistory = document.createElement('script'); //done loading the HTML, load the corresponding JS
           scriptHistory.src = '/js/analysis-history.js';
           document.head.appendChild(scriptHistory);
           console.log('analysis-history loaded');
 
           // Load analysis-distractions
-          $("#distractions-analysis").load("/html/analysis-distractions.html", function () { //load the distractions tab
+          $("#distractions-analysis-body").load("/html/analysis-distractions.html", function () { //load the distractions tab
             var scriptDistractions = document.createElement('script'); //done loading the HTML, load the corresponding JS
             scriptDistractions.src = '/js/analysis-distractions.js';
             document.head.appendChild(scriptDistractions);

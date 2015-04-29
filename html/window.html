@@ -101,36 +101,71 @@
 
                 <div class="tab-content" id="main-tab-content">
 
-                    <div class="timeframe-selector">
-                        <div class="form-inline display-none pull-right" id="custom-time-frame">
-                            <div class="form-group">
-                                <label>From</label> <input type="text" id="custom-time-from">
-                                <label>To</label> <input type="text" id="custom-time-to">
-                                <button id="set-custom-timeframe" class="btn btn-primary">Set</button>
+                    <h1 class="horizontal-text-center" id="page-title">Nodes</h1>
+                    <h4 class="horizontal-text-center" id="page-sub-title">A graphical representation of the websites you visit.</h4>
+                    <hr id="title-bottom" style="margin-bottom: 0px;">
+
+                    <div class="row">
+                        <div class="col-md-9">
+
+                            <!--Time frame selector-->
+                            <div class="timeframe-selector">
+
+
+                                <select class="form-control" style="display: inline-block;" id="domainfilter-select">
+                                    <option value="0">#nofilter</option>
+                                    <option value="1">Exclude Search Engines</option>
+                                </select>
+
+                                <select class="form-control" style="display: inline-block;" id="timeframe-select">
+                                    <option value="1">Day</option>
+                                    <option value="7">Week</option>
+                                    <option value="30">Month</option>
+                                    <option value="365">Year</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+
+                                <div class="form-inline display-none display-inline custom-time" id="custom-time-frame">
+                                    <div class="form-group">
+                                        <label>From</label> <input type="text" class="form-control" id="custom-time-from">
+                                        <label>To</label> <input type="text" class="form-control" id="custom-time-to">
+                                        <button id="set-custom-timeframe" class="btn btn-primary">Set</button>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
+                        <div class="col-md-3">
 
-                        <select class="form-control pull-right" id="timeframe-select">
-                            <option value="1">Day</option>
-                            <option value="7">Week</option>
-                            <option value="30">Month</option>
-                            <option value="365">Year</option>
-                            <option value="custom">Custom</option>
-                        </select>
+                            <!--Help box-->
+                            <div class="pull-right" id="help-box-container">
+                                <div class="checkbox checkbox-info" style="display: inline-block">
+                                    <input type="checkbox" id="tooltips-enabled">
+                                    <label for="tooltips-enabled">Tooltips </label> |
+                                </div>
+                                <a class="btn btn-info btn-xs" style="margin-right: 10px" href="#" data-toggle="modal" data-target="#tutorialModal">Open Tutorial</a>
+                            </div>
 
-                        <select class="form-control pull-right" id="domainfilter-select">
-                            <option value="0">#nofilter</option>
-                            <option value="1">Exclude Search Engines</option>
-                        </select>
+                        </div>
                     </div>
 
 
+                    <div role="tabpanel" class="tab-pane fade in active" id="nodes">
+                        <div id="nodes-body"></div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="timeline">
+                        <div id="timeline-body"></div>
+                    </div>
 
-                    <div role="tabpanel" class="tab-pane fade in active" id="nodes">Placeholder</div>
-                    <div role="tabpanel" class="tab-pane fade" id="timeline">Placeholder</div>
-                    <div role="tabpanel" class="tab-pane fade" id="history-analysis">Placeholder History</div>
-                    <div role="tabpanel" class="tab-pane fade" id="distractions-analysis">Placeholder Distractions</div>
-                    <div role="tabpanel" class="tab-pane fade" id="banlist">Placeholder Banlists</div>
+                    <div role="tabpanel" class="tab-pane fade" id="history-analysis">
+                        <div id="history-analysis-body"></div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="distractions-analysis">
+                        <div id="distractions-analysis-body"></div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="banlist">
+                        <div id="banlist-body"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -192,15 +227,7 @@
     </div>
 </div>
 
-<div class="pull-right" id="help-box-container">
-    <div class="checkbox checkbox-info" style="display: inline-block">
-        <input type="checkbox" id="tooltips-enabled">
-        <label for="tooltips-enabled">Tooltips </label> |
-    </div>
-    <a class="btn btn-info btn-xs" style="margin-right: 10px" href="#" data-toggle="modal" data-target="#tutorialModal">Open Tutorial</a>
-</div>
 
-<script src="/js/helpBox.js"></script>
 </body>
 
 

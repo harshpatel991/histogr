@@ -1,1 +1,3 @@
-$('#help-box-container').offset({top: $(window).height() - $('#help-box-container').height()});
+//$('#help-box-container').offset({top: $('#title-bottom').offset().top});
+
+//$('.timeframe-selector').offset({ top: $('#title-bottom').offset().top+10 });

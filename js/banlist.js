@@ -6,7 +6,8 @@ $("#banlist-button").click(function() {
     $('#mainTabList a[href="#banlist"]').tab('show')
     listRestrictedDomains();
     listDistractingDomains();
-    hideTimeFrameSelector();
+    fadeOutInToolBar();
+    setTitleText("Ban List", "Manage your triggers and block websites from being visited");
 });
 
 $('#restricted-domain-from').timepicker(); //initialize datepickers

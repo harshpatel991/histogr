@@ -1,7 +1,8 @@
 //On clicking the timelline side bar button
 $("#timeline-button").click(function() {
     $('#mainTabList a[href="#timeline"]').tab('show');
-    showTimeFrameSelector();
+    fadeOutInToolBar();
+    setTitleText("Timeline", "Your history in order of its visitation");
 });
 
 $(function() {
