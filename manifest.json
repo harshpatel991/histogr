@@ -3,6 +3,10 @@
   "description": "A history visualizer",
   "version": "1",
   "manifest_version": 2,
+  "background": {
+    "scripts": ["backgroundTask.js"],
+    "persistent": true
+  },
   "app": {
     "launch": {
       "local_path": "html/window.html"
@@ -11,6 +15,9 @@
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "permissions": [
     "storage",
-    "history"
+    "history",
+    "\u003Call_urls>",
+    "webRequest",
+    "webRequestBlocking"
   ]
 }
