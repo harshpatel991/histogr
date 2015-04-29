@@ -66,7 +66,6 @@ function generateNodesGraph(graphData, divSelector) {
     var force = d3.layout.force()
         .size([width, height])
         .charge(function(d) {
-            console.log(d);
             return -1* d.size*10;
         })
         .linkDistance(function(d) { return (d.source.size + d.target.size) * 4;})
@@ -102,8 +101,6 @@ function generateNodesGraph(graphData, divSelector) {
     force.nodes(graphData.nodes)
         .links(graphData.links)
         .start();
-
-    console.log(graphData.links);
 
     link = link.data(graphData.links)
         .enter().append("line")
