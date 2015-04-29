@@ -53,7 +53,7 @@ function createPieGraph(historyData) {
 
     change(randomData());
 
-    d3.select(".randomize")
+    $(".randomize")
         .on("click", function () {
             change(randomData());
         });

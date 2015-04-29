@@ -183,3 +183,7 @@ h4 {
 .type-trigger{
   fill: #9253a0;
 }
+
+.help-icon {
+  display: none;
+}

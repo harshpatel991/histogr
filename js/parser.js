@@ -191,7 +191,7 @@ function buildTypedUrlList(startTime, endTime, filter) {
                 var linkFreq = historyItem.outgoingLinks[j];
                 if (linkFreq > goldenLinkRatio * totalLinks / totalItems) {
                     historyItem.outgoingRelations.push(j);
-                    if (parsedDomainHistory[j].domainType === 'distraction' && historyItem.domainType != 'trigger') {
+                    if (parsedDomainHistory[j].domainType === 'distraction' && historyItem.domainType != 'distraction') {
                         historyItem.domainType = 'trigger';
                     }
                 }
