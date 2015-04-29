@@ -1,3 +1,80 @@
-<iframe id="sortedGraphIfrm" width="600" height="500" frameBorder="0" src="graphs/sortedGraph.html">
+<style>
 
-</iframe>
+    body{
+        height: 100%;
+    }
+    .axis text {
+        font: 10px sans-serif;
+    }
+
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+    }
+
+    .bar {
+        fill: steelblue;
+        fill-opacity: .9;
+    }
+
+    .x.axis path {
+        display: none;
+    }
+
+    path.slice{
+        stroke-width:2px;
+    }
+
+    svg {
+        width: 100%;
+        height: 100%;
+    }
+
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-7">
+            <h3 id="analysis-chart-title"><span class="tutorial-tootlip" title="This shows your website visit frequencies for each domain">
+                Website Visit Frequency
+                <span class="help-icon glyphicon glyphicon-question-sign"></span>
+            </span></h3>
+            <label><input id="analysisChartSort-selection" type="checkbox"> Sort values</label>
+            <div class="analysis-chart-sort"></div>
+        </div>
+        <div class="col-md-5">
+            <h3><span class="tutorial-tootlip" title="This shows the frequency of types of website visits">
+                Aggregate Website Type Visits
+                <span class="help-icon glyphicon glyphicon-question-sign"></span>
+            </span></h3>
+            <button class="randomize">randomize</button>
+            <div class="btn-toolbar" role="toolbar" aria-label="...">
+                <div class="btn-group" role="group" aria-label="...">
+                    <button type="button" class="randomize btn btn-default">ALL</button>
+                </div>
+                <div class="btn-group" role="group" aria-label="...">
+                    <button type="button" class="randomize btn btn-default">Sun</button>
+                    <button type="button" class="randomize btn btn-default">Mon</button>
+                    <button type="button" class="randomize btn btn-default">Tue</button>
+                    <button type="button" class="randomize btn btn-default">Wed</button>
+                    <button type="button" class="randomize btn btn-default">Thu</button>
+                    <button type="button" class="randomize btn btn-default">Fri</button>
+                    <button type="button" class="randomize btn btn-default">Sat</button>
+                </div>
+            </div>
+            <div class="analysis-chart-pie"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <h3><span class="tutorial-tootlip" title="This shows your website visit frequencies for each domain over time">
+                Website Visit Type Timeline
+                <span class="help-icon glyphicon glyphicon-question-sign"></span>
+            </span></h3>
+        </div>
+        <div class="col-md-4">
+            <h3>Legend</h3>
+        </div>
+    </div>
+</div>

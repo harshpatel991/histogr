@@ -1,17 +1,8 @@
-function onParse(historyData) {
-    /*retrieveFromStorage('title', function(value){
-        $('#analysis-chart-title').text(value);
-    });*/
-
-    //$('#analysis-chart-title').text(parsedDomainHistory[0].name);
-    createGraph(historyData);
-}
-
-function createGraph(historyData) {
+function createBarGraph(historyData) {
     d3.select(".analysis-chart-sort").html('');
     var margin = {top: 20, right: 20, bottom: 100, left: 40},
         width = 500,
-        height = 250;
+        height = 200;
 
 
     var x = d3.scale.ordinal()
@@ -71,8 +62,9 @@ function createGraph(historyData) {
         svg.selectAll(".bar")
             .data(historyData)
             .enter().append("rect")
-            .attr("class", function (d){
-                return "bar type-"+ d.domainType;
+            .attr("class", "bar")
+            .attr("style", function(d){
+                return "fill: " + CustomColors.getTypeColor(d.domainType);
             })
             .attr("x", function (d) {
                 return x(d.name);
@@ -85,7 +77,7 @@ function createGraph(historyData) {
                 return height - y(d.totalFreq);
             });
 
-        d3.select("input").on("change", change);
+        $("#analysisChartSort-selection").on("change", change);
 
         var sortTimeout = setTimeout(function () {
             d3.select("input").property("checked", false).each(change);
@@ -129,4 +121,20 @@ function createGraph(historyData) {
                 .selectAll("g")
                 .delay(delay);
         }
+    var chart = $(".analysis-chart-sort svg");
+    $(window).on("resize", function () {
+        //scaleGraph();
+    });
+
+//Change size of graph to fit parent element
+    function scaleGraph() {
+        var aspect = width / height;
+        var targetWidth = chart.parent().width();
+        var targetHeight = chart.parent().height();
+        console.log('width: ' + targetWidth);
+        console.log('height: ' + targetHeight);
+        chart.attr("width", targetWidth+"px");
+        chart.attr("height", targetHeight+"px");
+    }
+    //scaleGraph();
 }

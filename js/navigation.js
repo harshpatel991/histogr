@@ -123,10 +123,10 @@ function onAllTabsLoaded(){
 function changeToolTips(enabled){
   $('.tutorial-tootlip').tooltipster(enabled ? 'enable' : 'disable');
   if (enabled){
-    $('.help-icon').removeClass('hidden');
+    $('.help-icon').fadeIn(500);
   }
   else{
-    $('.help-icon').addClass('hidden');
+    $('.help-icon').fadeOut(500);
   }
   addSingleKeyToStorage('tooltipsEnabled', enabled, function(){});
 }

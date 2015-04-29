@@ -122,8 +122,9 @@ function generateNodesGraph(graphData, divSelector) {
         .attr("r", function (d) { //set size for each node to the value read from json
             return d.size * 2;
         })
-        .attr("class", function(d){
-            return "node type-"+ d.domainType;
+        .attr("class", "node")
+        .attr("style", function(d){
+            return "fill: " + CustomColors.getTypeColor(d.domainType);
         })
         .on("contextmenu", function (d) {
             rightClickNode(d);
