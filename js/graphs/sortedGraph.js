@@ -1,7 +1,7 @@
 function createBarGraph(historyData) {
     d3.select(".analysis-chart-sort").html('');
     var margin = {top: 20, right: 20, bottom: 100, left: 40},
-        width = 500,
+        width = 1100,
         height = 200;
 
 
@@ -27,100 +27,106 @@ function createBarGraph(historyData) {
 
 
     historyData.forEach(function (d) {
-            d.totalFreq = +d.totalFreq;
+        d.totalFreq = +d.totalFreq;
+    });
+
+    x.domain(historyData.map(function (d) {
+        return d.name;
+    }));
+    y.domain([0, d3.max(historyData, function (d) {
+        return d.totalFreq;
+    })]);
+
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+        .selectAll("text")
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", function (d) {
+            return "rotate(-70)"
         });
 
-        x.domain(historyData.map(function (d) {
-            return d.name;
-        }));
-        y.domain([0, d3.max(historyData, function (d) {
-            return d.totalFreq;
-        })]);
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .text("Visits");
 
-        svg.append("g")
-            .attr("class", "x axis")
+    svg.selectAll(".bar")
+        .data(historyData)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("style", function (d) {
+            return "fill: " + CustomColors.getTypeColor(d.domainType);
+        })
+        .attr("x", function (d) {
+            return x(d.name);
+        })
+        .attr("width", x.rangeBand())
+        .attr("y", function (d) {
+            return y(d.totalFreq);
+        })
+        .attr("height", function (d) {
+            return height - y(d.totalFreq);
+        });
+
+    //$("#analysisChartSort-selection").on("change", change);
+    $('input:radio[name=sortGraphOptions]').on('change', function () {
+        console.log(this.value);
+        change(this.value);
+    });
+    function change(sortValue) {
+
+        // Copy-on-write since tweens are evaluated after a delay.
+        var x0 = x.domain(historyData.sort(function (a, b) {
+            if (sortValue === 'name') {
+                return d3.ascending(a.name, b.name);
+            }
+            else if (sortValue === 'visits') {
+                return b.totalFreq - a.totalFreq;
+            }
+            else {
+                return a.graphIdx - b.graphIdx;
+            }
+        })
+            .map(function (d) {
+                return d.name;
+            }))
+            .copy();
+
+        svg.selectAll(".bar")
+            .sort(function (a, b) {
+                return x0(a.name) - x0(b.name);
+            });
+
+        var transition = svg.transition().duration(400),
+            delay = function (d, i) {
+                return i * 5;
+            };
+
+        transition.selectAll(".bar")
+            .delay(delay)
+            .attr("x", function (d) {
+                return x0(d.name);
+            });
+
+        transition.select(".x.axis")
             .attr("transform", "translate(0," + height + ")")
+            .style("text-anchor", "end")
             .call(xAxis)
             .selectAll("text")
             .style("text-anchor", "end")
-            .attr("dx", "-.8em")
-            .attr("dy", ".15em")
-            .attr("transform", function(d) {
-                return "rotate(-65)"
-            });
+            .selectAll("g")
+            .delay(delay);
+    }
 
-        svg.append("g")
-            .attr("class", "y axis")
-            .call(yAxis)
-            .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", ".71em")
-            .style("text-anchor", "end")
-            .text("Frequency");
-
-        svg.selectAll(".bar")
-            .data(historyData)
-            .enter().append("rect")
-            .attr("class", "bar")
-            .attr("style", function(d){
-                return "fill: " + CustomColors.getTypeColor(d.domainType);
-            })
-            .attr("x", function (d) {
-                return x(d.name);
-            })
-            .attr("width", x.rangeBand())
-            .attr("y", function (d) {
-                return y(d.totalFreq);
-            })
-            .attr("height", function (d) {
-                return height - y(d.totalFreq);
-            });
-
-        $("#analysisChartSort-selection").on("change", change);
-
-        var sortTimeout = setTimeout(function () {
-            d3.select("input").property("checked", false).each(change);
-        }, 2000);
-
-        function change() {
-            clearTimeout(sortTimeout);
-            //alert('asdf');
-
-            // Copy-on-write since tweens are evaluated after a delay.
-            var x0 = x.domain(historyData.sort(this.checked
-                ? function (a, b) {
-                return b.totalFreq - a.totalFreq;
-            }
-                : function (a, b) {
-                return d3.ascending(a.name, b.name);
-            })
-                .map(function (d) {
-                    return d.name;
-                }))
-                .copy();
-
-            svg.selectAll(".bar")
-                .sort(function (a, b) {
-                    return x0(a.name) - x0(b.name);
-                });
-
-            var transition = svg.transition().duration(750),
-                delay = function (d, i) {
-                    return i * 50;
-                };
-
-            transition.selectAll(".bar")
-                .delay(delay)
-                .attr("x", function (d) {
-                    return x0(d.name);
-                });
-
-            transition.select(".x.axis")
-                .call(xAxis)
-                .selectAll("g")
-                .delay(delay);
-        }
     var chart = $(".analysis-chart-sort svg");
     $(window).on("resize", function () {
         //scaleGraph();
@@ -133,8 +139,9 @@ function createBarGraph(historyData) {
         var targetHeight = chart.parent().height();
         console.log('width: ' + targetWidth);
         console.log('height: ' + targetHeight);
-        chart.attr("width", targetWidth+"px");
-        chart.attr("height", targetHeight+"px");
+        chart.attr("width", targetWidth + "px");
+        chart.attr("height", targetHeight + "px");
     }
+
     //scaleGraph();
 }
