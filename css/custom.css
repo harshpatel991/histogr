@@ -130,6 +130,12 @@ h4 {
   visibility: hidden;
 }
 
+.node-label {
+  stroke-width: 0;
+  fill: rgb(11, 46, 81);
+  text-align: center;
+}
+
 .green {
   color: #3aa233
 }

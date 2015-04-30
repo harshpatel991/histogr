@@ -71,7 +71,7 @@ function generateNodesGraph(graphData, divSelector) {
     var margin = {top: 20, right: 20, bottom: 100, left: 40};
     $(divSelector).html('');
 
-    var width = 700,
+    var width = 850,
         height = 450;
 
     var force = d3.layout.force()
@@ -118,10 +118,8 @@ function generateNodesGraph(graphData, divSelector) {
         .attr("class", "link");
 
     node = node.data(graphData.nodes)
-        .enter().append("circle")
-        .attr("r", function (d) { //set size for each node to the value read from json
-            return d.size * 2;
-        })
+        .enter().append("g")
+
         .attr("class", "node")
         .attr("style", function(d){
             return "fill: " + CustomColors.getTypeColor(d.domainType);
@@ -133,13 +131,25 @@ function generateNodesGraph(graphData, divSelector) {
         })
         .call(drag);
 
+    node.append("circle")
+        .attr("r", function (d) { //set size for each node to the value read from json
+            return d.size * 2;
+        });
+
+    node.append("text")
+        .attr("padding-top", "10px")
+        .attr("text-anchor", "middle")
+        .attr("class", "node-label")
+        .attr("font-size", function(d) {return ((Math.log(d.size) +1)/2.5) * 10})
+        .text(function(d) { return d.domain });
+
     function rightClickNode(data) {
         var parentOffset = $('.nodes-chart').parent().offset(); //calculate where the tool tip needs to appear
         var relX = event.pageX - parentOffset.left;
         var relY = event.pageY - parentOffset.top;
 
         existsInStorage("distractingDomains", data.domain, function (exists) { //determine what text needs to be in the tool tip
-            var toolTipBox = '<div class="panel panel-default"> <div class="panel-heading"> <h3 class="panel-title">' + data.domain + ' <button class="btn btn-danger btn-xs pull-right" id="close-tooltip"><span class="glyphicon glyphicon-remove"></span></button></h3> </div> <div class="panel-body">Size: ' + data.size + '<br/>id: ' + data.id + '<br/>type: ' + data.domainType + '<hr>';
+            var toolTipBox = '<div class="panel panel-default"> <div class="panel-heading"> <h3 class="panel-title">' + data.domain + ' <button class="btn btn-danger btn-xs pull-right" id="close-tooltip"><span class="glyphicon glyphicon-remove"></span></button></h3> </div> <div class="panel-body"><b>Type: </b>' + data.domainType + '<hr>';
 
             if (!exists) {
                 toolTipBox += '<button class="btn btn-primary btn-xs center-block" id="nodesAddAsDistraction"><span class="glyphicon glyphicon-plus"></span> Add as Distraction</button></div> </div>';
@@ -179,12 +189,7 @@ function generateNodesGraph(graphData, divSelector) {
             return d.target.y;
         });
 
-        node.attr("cx", function (d) {
-            return d.x;
-        })
-        .attr("cy", function (d) {
-            return d.y;
-        });
+        node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
     }
 
 //When starting to drag, set the node as fixed
@@ -200,10 +205,6 @@ function generateNodesGraph(graphData, divSelector) {
 
 //Change size of graph to fit parent element
     function scaleGraph() {
-        var aspect = width / height;
-        var targetWidth = chart.parent().width();
-        var targetHeight = chart.parent().height();
-
         chart.attr("width", "100%");
         chart.attr("height", "100%");
     }
