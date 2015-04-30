@@ -5,6 +5,7 @@ function HistoryVisitItem(domainId, domainName, visitTime){
     this.domainId = domainId;
     this.domainName = domainName;
     this.visitTime = visitTime;
+    this.domainType = 'other';
 }
 
 function DomainHistory(id, name) {
@@ -196,6 +197,11 @@ function buildTypedUrlList(startTime, endTime, filter) {
                     }
                 }
             }
+        }
+
+        for (i in entireHistory){
+            var visitItem = entireHistory[i];
+            visitItem.domainType = parsedDomainHistory[visitItem.domainId].domainType;
         }
 
         //TODO: Mark distraction sites based on given file
