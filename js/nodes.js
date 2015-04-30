@@ -198,7 +198,7 @@ function generateNodesGraph(graphData, divSelector) {
     }
 
 //Resize on window size change, keep aspect ratio
-    chart = $("#nodes-svg");
+    var chart = $("#nodes-svg");
     $(window).on("resize", function () {
         scaleGraph();
     });

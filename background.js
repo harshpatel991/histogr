@@ -43,7 +43,7 @@ chrome.webRequest.onBeforeRequest.addListener(
                     currMins >= background_restrictedStartTimes[i] && currMins <= background_restrictedEndTimes[i];
             if (shouldBlock) {
                 console.log(background_restrictedDomains[i] + ' blocked');
-                return {redirectUrl: chrome.extension.getURL('blocked_site.html')};
+                return {redirectUrl: chrome.extension.getURL('html/blocked_site.html')};
             }
         }
         return {cancel: false};

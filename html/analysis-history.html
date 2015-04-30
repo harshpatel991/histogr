@@ -1,8 +1,9 @@
 <style>
 
-    body{
+    body {
         height: 100%;
     }
+
     .axis text {
         font: 10px sans-serif;
     }
@@ -23,8 +24,8 @@
         display: none;
     }
 
-    path.slice{
-        stroke-width:2px;
+    path.slice {
+        stroke-width: 2px;
     }
 
     svg {
@@ -36,16 +37,28 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-8">
-            <h3><span class="tutorial-tootlip" title="This shows your website visit frequencies for each domain over time">
+            <h3><span class="tutorial-tootlip"
+                      title="This shows your website visit frequencies for each domain over time">
                 Website Visit Type Timeline
                 <span class="help-icon glyphicon glyphicon-question-sign"></span>
             </span></h3>
+            <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-default active">
+                    <input type="radio" name="lineGraphOptions" value="hours" autocomplete="off"
+                           checked>Hours
+                </label>
+                <label class="btn btn-default">
+                    <input type="radio" name="lineGraphOptions" value="days" autocomplete="off">Days
+                </label>
+            </div>
+            <div class="analysis-chart-line"></div>
         </div>
         <div class="col-md-4">
             <h3><span class="tutorial-tootlip" title="This shows the frequency of types of website visits">
                 Aggregate Website Type Visits
                 <span class="help-icon glyphicon glyphicon-question-sign"></span>
             </span></h3>
+
             <div class="btn-toolbar" role="toolbar" aria-label="..." data-toggle="buttons">
                 <div class="btn-group" role="group" aria-label="...">
                     <label class="btn btn-default active">
@@ -63,7 +76,7 @@
                         <input type="radio" name="pieGraphOptions" value="3" autocomplete="off">Tue
                     </label>
                     <label class="btn btn-default">
-                        <input type="radio" name="pieGraphOptions" value="4" autocomplete="off" >Wed
+                        <input type="radio" name="pieGraphOptions" value="4" autocomplete="off">Wed
                     </label>
                     <label class="btn btn-default">
                         <input type="radio" name="pieGraphOptions" value="5" autocomplete="off">Thu
@@ -81,13 +94,16 @@
     </div>
     <div class="row">
         <div class="col-md-9">
-            <h3 id="analysis-chart-title"><span class="tutorial-tootlip" title="This shows your website visit frequencies for each domain">
+            <h3 id="analysis-chart-title"><span class="tutorial-tootlip"
+                                                title="This shows your website visit frequencies for each domain">
                 Website Visit Frequency
                 <span class="help-icon glyphicon glyphicon-question-sign"></span>
             </span></h3>
+
             <div class="btn-group" data-toggle="buttons">
                 <label class="btn btn-default active">
-                    <input type="radio" name="sortGraphOptions" id="optionGroup" value="type" autocomplete="off" checked>Type
+                    <input type="radio" name="sortGraphOptions" id="optionGroup" value="type" autocomplete="off"
+                           checked>Type
                 </label>
                 <label class="btn btn-default">
                     <input type="radio" name="sortGraphOptions" id="optionName" value="name" autocomplete="off">Name
