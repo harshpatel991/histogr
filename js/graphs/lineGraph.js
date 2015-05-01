@@ -23,7 +23,7 @@ function generateLineGraph(data) {
             colors: {
                 distraction: CustomColors.distraction,
                 trigger: CustomColors.trigger,
-                other: CustomColors.regular
+                other: CustomColors.other
             }
         },
 

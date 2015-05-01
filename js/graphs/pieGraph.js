@@ -20,7 +20,7 @@ function createPieGraph(data){
             colors: {
                 Distraction: CustomColors.distraction,
                 Trigger: CustomColors.trigger,
-                Other: CustomColors.regular
+                Other: CustomColors.other
             },
             type : 'donut'
         },

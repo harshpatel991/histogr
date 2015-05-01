@@ -12,9 +12,12 @@ $("#node-button").click(function () {
 function setTitleText(title, subtitle) {
 
 
-
-    fadeOutInItem($('#page-title'), function() { $('#page-title').html(title); });
-    fadeOutInItem($('#page-sub-title'), function() {$('#page-sub-title').html(subtitle);});
+    fadeOutInItem($('#page-title'), function () {
+        $('#page-title').html(title);
+    });
+    fadeOutInItem($('#page-sub-title'), function () {
+        $('#page-sub-title').html(subtitle);
+    });
 }
 
 // Run when this tab is finished loading
@@ -22,16 +25,29 @@ $(function () {
     document.addEventListener('parse', function (value) {
         generateNodesGraph(getNodeGraphData(value.detail.parsedDomainHistory), ".nodes-chart")
     });
+
+    document.addEventListener('reparseUpdate', function (value) {
+        redrawColors(value.detail.domainTypeDict);
+    });
 });
 
 var goldenSizeRatio = 10;
 
-function getSingleNodesGraphData(domainHistory, domainNames){
+function getSingleNodesGraphData(domainHistory, domainNames) {
     return getNodeGraphData(domainHistory);
 }
 
+function redrawColors(domainTypes) {
+    $('.node-label').each(function () {
+        var domainName = $(this).text();
+        var $parentNode = $(this).parent();
+        var domainType = domainTypes[domainName];
+        $parentNode.attr('style', 'fill: ' + CustomColors[domainType]);
+    });
+}
+
 function getNodeGraphData(domainHistory) {
-    domainHistory.sort(function (a, b) {
+    domainHistory = domainHistory.slice(0).sort(function (a, b) {
         return b.totalFreq - a.totalFreq
     });
 
@@ -45,7 +61,12 @@ function getNodeGraphData(domainHistory) {
         var historyItem = slicedHistory[i];
         totalFreq += historyItem.totalFreq;
         dataTranslation[historyItem.id] = iter++;
-        graphData.nodes.push({"id": historyItem.id, "domain": historyItem.name, "size": historyItem.totalFreq, "domainType": historyItem.domainType});
+        graphData.nodes.push({
+            "id": historyItem.id,
+            "domain": historyItem.name,
+            "size": historyItem.totalFreq,
+            "domainType": historyItem.domainType
+        });
     }
 
     for (i in slicedHistory) {
@@ -61,7 +82,7 @@ function getNodeGraphData(domainHistory) {
     for (i in graphData.nodes) {
         graphData.nodes[i].size *= goldenSizeRatio / avgFreq;
 
-        graphData.nodes[i].size = ((Math.log(graphData.nodes[i].size) +1)/2.5) * 10
+        graphData.nodes[i].size = ((Math.log(graphData.nodes[i].size) + 1) / 2.5) * 10
     }
     return graphData;
 }
@@ -76,10 +97,12 @@ function generateNodesGraph(graphData, divSelector) {
 
     var force = d3.layout.force()
         .size([width, height])
-        .charge(function(d) {
-            return -1* d.size*10;
+        .charge(function (d) {
+            return -1 * d.size * 10;
         })
-        .linkDistance(function(d) { return (d.source.size + d.target.size) * 4;})
+        .linkDistance(function (d) {
+            return (d.source.size + d.target.size) * 4;
+        })
         .gravity(.05)
         .on("tick", tick);
 
@@ -121,7 +144,7 @@ function generateNodesGraph(graphData, divSelector) {
         .enter().append("g")
 
         .attr("class", "node")
-        .attr("style", function(d){
+        .attr("style", function (d) {
             return "fill: " + CustomColors.getTypeColor(d.domainType);
         })
         .on("contextmenu", function (d) {
@@ -140,8 +163,12 @@ function generateNodesGraph(graphData, divSelector) {
         .attr("padding-top", "10px")
         .attr("text-anchor", "middle")
         .attr("class", "node-label")
-        .attr("font-size", function(d) {return ((Math.log(d.size) +1)/2.5) * 10})
-        .text(function(d) { return d.domain });
+        .attr("font-size", function (d) {
+            return ((Math.log(d.size) + 1) / 2.5) * 10
+        })
+        .text(function (d) {
+            return d.domain
+        });
 
     function rightClickNode(data) {
         var parentOffset = $('.nodes-chart').parent().offset(); //calculate where the tool tip needs to appear
@@ -155,10 +182,10 @@ function generateNodesGraph(graphData, divSelector) {
                 toolTipBox += '<button class="btn btn-primary btn-xs center-block" id="nodesAddAsDistraction"><span class="glyphicon glyphicon-plus"></span> Add as Distraction</button></div> </div>';
                 tooltip.style("visibility", "visible")
                     .html(toolTipBox)
-                    .style("top", (relY+20) + "px")
+                    .style("top", (relY + 20) + "px")
                     .style("left", (relX) + "px");
                 $("#nodesAddAsDistraction").click(function () {
-                    addDistractingDomain(data.domain);
+                    addDistractingDomain(data.domain, true);
                     closeToolTip();
                 });
             }
@@ -179,17 +206,19 @@ function generateNodesGraph(graphData, divSelector) {
         link.attr("x1", function (d) {
             return d.source.x;
         })
-        .attr("y1", function (d) {
-            return d.source.y;
-        })
-        .attr("x2", function (d) {
-            return d.target.x;
-        })
-        .attr("y2", function (d) {
-            return d.target.y;
-        });
+            .attr("y1", function (d) {
+                return d.source.y;
+            })
+            .attr("x2", function (d) {
+                return d.target.x;
+            })
+            .attr("y2", function (d) {
+                return d.target.y;
+            });
 
-        node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+        node.attr("transform", function (d) {
+            return "translate(" + d.x + "," + d.y + ")";
+        });
     }
 
 //When starting to drag, set the node as fixed

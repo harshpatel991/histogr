@@ -30,10 +30,14 @@ $(function () {
     document.addEventListener('parse', function (value) {
         changeSelectOptions(value.detail.parsedDomainHistory);
     });
+
+    document.addEventListener('reparseUpdate', function (value) {
+        changeSelectOptions(value.detail.parsedDomainHistory);
+    });
 });
 
 function changeSelectOptions(domainHistory){
-    domainHistory.sort(function(a,b){return a.name.localeCompare(b.name);});
+    domainHistory = domainHistory.slice(0).sort(function(a,b){return a.name.localeCompare(b.name);});
     var restrictOptHtml = '<option></option>';
     var distractionOptHtml = '<option></option>';
     for (var i in domainHistory){
@@ -93,6 +97,7 @@ function addDistractingDomainFromTextBox() {
 
     if(urlMarkAsDistracting != '') {
         $('#distracting-domain').select2("val", ""); //clear the box
+        Parser.isDirty = true;
         addDistractingDomain(urlMarkAsDistracting);
     }
     else {
@@ -100,9 +105,13 @@ function addDistractingDomainFromTextBox() {
     }
 }
 
-function addDistractingDomain(domain) {
+function addDistractingDomain(domain, shouldReparse) {
     console.log("adding distracting domain: " + domain);
     appendToStorage("distractingDomains", domain, function () {
+        if (shouldReparse){
+            console.log('here');
+            Parser.reparseDomainTypes(true);
+        }
         listDistractingDomains();
     });
 }
@@ -147,6 +156,7 @@ function deleteRestrictedDomain(index) {
             pruneFromStorage("restrictedDomainsTimeFrom", index, function() {
                 pruneFromStorage("restrictedDomainsTimeTo", index, function() {
                     chrome.runtime.sendMessage('backgroundUpdate');
+
                         listRestrictedDomains();
                 });
             });
@@ -156,6 +166,7 @@ function deleteRestrictedDomain(index) {
 
 function deleteDistractingDomain(index) {
     return function () {
+        Parser.isDirty = true;
         pruneFromStorage("distractingDomains", index, function() {listDistractingDomains();});
     }
 }

@@ -13,21 +13,22 @@ $('input:radio[name=lineGraphOptions]').on('change', function () {
     lineGraphChange(this.value);
 });
 
-
-
-$('')
-
 // Run when this tab is finished loading
 $(function () {
     document.addEventListener('parse', function (value) {
-        var parsedDomainHistory = value.detail.parsedDomainHistory;
-        var entireHistoryVisits = value.detail.entireHistory;
+        createAllGraphs(value.detail.parsedDomainHistory, value.detail.entireHistory);
+    });
 
-        createBarGraph(getBarGraphData(parsedDomainHistory));
+    document.addEventListener('reparseUpdate', function (value) {
+        createAllGraphs(value.detail.parsedDomainHistory, value.detail.entireHistory);
+    });
+
+    function createAllGraphs(domainHistory, entireHistoryVisits){
+        createBarGraph(getBarGraphData(domainHistory));
         createPieGraph(getPieGraphData(entireHistoryVisits));
         createLineGraph(getLineGraphData(entireHistoryVisits));
-        createDataPanels(getDomainPanelData(parsedDomainHistory));
-    });
+        createDataPanels(getDomainPanelData(domainHistory));
+    }
 
     function createDataPanels(domainData){
         var uniqueHtml = '<span class="glyphicon glyphicon glyphicon-stop type-distraction">Distraction: '+domainData.uniqueData.distraction+'</span><br>';
@@ -54,7 +55,7 @@ $(function () {
 
     function getBarGraphData(origData) {
         var groupData = [];
-        origData.sort(function (a, b) {
+        origData = origData.slice(0).sort(function (a, b) {
             return b.totalFreq - a.totalFreq
         });
         var totalCount = 0,

@@ -1,7 +1,7 @@
 function CustomColors(){}
 
 CustomColors.trigger = '#9253a0';
-CustomColors.regular = '#3e79d6';
+CustomColors.other = '#3e79d6';
 CustomColors.distraction = '#F2517F';
 
 CustomColors.getTypeColor = function(type){
@@ -12,6 +12,6 @@ CustomColors.getTypeColor = function(type){
         return CustomColors.distraction;
     }
     else{
-        return CustomColors.regular;
+        return CustomColors.other;
     }
 };

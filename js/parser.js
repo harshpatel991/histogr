@@ -211,8 +211,9 @@ function buildTypedUrlList(startTime, endTime, filter) {
         parseEvent.initCustomEvent('parse', true, true, {'entireHistory':entireHistory, 'parsedDomainHistory':parsedDomainHistory});
         document.dispatchEvent(parseEvent);
         Spinner.hide();
+        Parser.isDirty = false;
     };
-};
+}
 
 function Parser(){}
 
@@ -227,4 +228,56 @@ Parser.getEntireHistory = function(){
 };
 Parser.getParsedDomainHistory = function(){
     return parsedDomainHistory;
+};
+Parser.isDirty = false;
+
+Parser.triggerReparse = function(){
+    if (Parser.isDirty){
+        Parser.reparseDomainTypes(true);
+    }
+
+    Parser.isDirty = false;
+};
+
+Parser.reparseDomainTypes = function(shouldSendDispatchEvent){
+    console.log('reparse');
+    retrieveFromStorage('distractingDomains', function(distractions) {
+        var domainTypeDict = [];
+        for (var i in parsedDomainHistory) {
+            var domainKey = parsedDomainHistory[i].name;
+            if (distractions.indexOf(domainKey) >-1) {
+                parsedDomainHistory[i].domainType = 'distraction';
+            }
+            else {
+                parsedDomainHistory[i].domainType = 'other';
+            }
+        }
+
+        for (i in parsedDomainHistory) {
+            var historyItem = parsedDomainHistory[i];
+            for (j in historyItem.outgoingRelations) {
+                if (parsedDomainHistory[j].domainType == 'distraction' && historyItem.domainType != 'distraction'){
+                    historyItem.domainType = 'trigger';
+                    break;
+                }
+            }
+        }
+
+        for (i in parsedDomainHistory) {
+            domainTypeDict[parsedDomainHistory[i].name] = parsedDomainHistory[i].domainType;
+        }
+
+        for (i in entireHistory){
+            var visitItem = entireHistory[i];
+            visitItem.domainType = parsedDomainHistory[visitItem.domainId].domainType;
+        }
+
+        if (shouldSendDispatchEvent){
+            var updateEvent = document.createEvent('CustomEvent');
+            updateEvent.initCustomEvent('reparseUpdate', true, true, {domainTypeDict: domainTypeDict, entireHistory: entireHistory, parsedDomainHistory: parsedDomainHistory});
+            document.dispatchEvent(updateEvent);
+        }
+
+        Parser.isDirty = false;
+    });
 };

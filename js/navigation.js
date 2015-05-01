@@ -103,6 +103,10 @@ function onAllTabsLoaded(){
     showTutorialArrowIfNeeded();
   });
 
+  $('.sidebar-link').on('click', function(){
+    Parser.triggerReparse();
+  });
+
   retrieveFromStorage('shouldShowWelcome', function(value){
     if (value == undefined || value == true){
       $('#welcomeModal').modal('show');
