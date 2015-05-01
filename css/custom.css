@@ -182,12 +182,15 @@ h4 {
 /* Graph type colors */
 .type-other{
   fill: #3e79d6;
+  color: #3e79d6;
 }
 .type-distraction{
   fill: #F2517F;
+  color: #F2517F;
 }
 .type-trigger{
   fill: #9253a0;
+  color: #9253a0;
 }
 
 .help-icon {

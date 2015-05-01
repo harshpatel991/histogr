@@ -14,6 +14,9 @@ $('input:radio[name=lineGraphOptions]').on('change', function () {
 });
 
 
+
+$('')
+
 // Run when this tab is finished loading
 $(function () {
     document.addEventListener('parse', function (value) {
@@ -23,7 +26,31 @@ $(function () {
         createBarGraph(getBarGraphData(parsedDomainHistory));
         createPieGraph(getPieGraphData(entireHistoryVisits));
         createLineGraph(getLineGraphData(entireHistoryVisits));
+        createDataPanels(getDomainPanelData(parsedDomainHistory));
     });
+
+    function createDataPanels(domainData){
+        var uniqueHtml = '<span class="glyphicon glyphicon glyphicon-stop type-distraction">Distraction: '+domainData.uniqueData.distraction+'</span><br>';
+        uniqueHtml += '<span class="glyphicon glyphicon glyphicon-stop type-trigger">Trigger: '+domainData.uniqueData.trigger+'</span><br>';
+        uniqueHtml += '<span class="glyphicon glyphicon glyphicon-stop type-other">Other: '+domainData.uniqueData.other+'</span>';
+        $('#uniqueTotalsPanel').html(uniqueHtml);
+
+        var visitHtml = '<span class="glyphicon glyphicon glyphicon-stop type-distraction">Distraction: '+domainData.visitData.distraction+'</span><br>';
+        visitHtml += '<span class="glyphicon glyphicon glyphicon-stop type-trigger">Trigger: '+domainData.visitData.trigger+'</span><br>';
+        visitHtml += '<span class="glyphicon glyphicon glyphicon-stop type-other">Other: '+domainData.visitData.other+'</span>';
+        $('#visitTotalsPanel').html(visitHtml);
+    }
+
+    function getDomainPanelData(domainHistory){
+        var uniqueData = {distraction: 0, trigger: 0, other: 0};
+        var visitData = {distraction: 0, trigger: 0, other: 0};
+
+        for (var i in domainHistory){
+            uniqueData[domainHistory[i].domainType]++;
+            visitData[domainHistory[i].domainType] += domainHistory[i].totalFreq;
+        }
+        return {uniqueData: uniqueData, visitData: visitData};
+    }
 
     function getBarGraphData(origData) {
         var groupData = [];
@@ -84,39 +111,6 @@ $(function () {
         }
         return graphData;
     }
-
-    /*function getLineGraphData(historyVisits){
-        var daysData = [];
-        daysData['distraction'] = [];
-        daysData['trigger'] = [];
-        daysData['other'] = [];
-
-        var hoursData = [];
-        hoursData['distraction'] = [];
-        hoursData['trigger'] = [];
-        hoursData['other'] = [];
-
-        for (var i = 0; i < 7; i++){
-            daysData['distraction'][i] = 0;
-            daysData['trigger'][i] = 0;
-            daysData['other'][i] = 0;
-        }
-
-        for (i = 0; i < 24; i++){
-            hoursData['distraction'][i] = 0;
-            hoursData['trigger'][i] = 0;
-            hoursData['other'][i] = 0;
-        }
-
-        for (i in historyVisits) {
-            var visit = historyVisits[i];
-            var visitDate = new Date(visit.visitTime);
-            hoursData[visit.domainType][visitDate.getHours()]++;
-            daysData[visit.domainType][visitDate.getDay()]++;
-        }
-
-        return daysData;
-    }*/
 
     function getLineGraphData(historyVisits){
         var daysData = [];

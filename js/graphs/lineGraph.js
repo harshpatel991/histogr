@@ -37,11 +37,5 @@ function generateLineGraph(data) {
 }
 
 function lineGraphChange(selector) {
-    /*lineChart.load({
-        json: lineGraphData[selector],
-        keys: {
-            value: ['distraction', 'trigger', 'other']
-        }
-    });*/
     generateLineGraph(lineGraphData[selector]);
 }
