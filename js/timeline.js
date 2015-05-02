@@ -16,8 +16,6 @@ var graph = null;
 var current_history_data;
 
 function getDayMinutes(date) {
-    //return 5;
-    //return Math.random()*10;
     return date.getHours() * 60 + date.getMinutes();
 }
 
@@ -45,11 +43,10 @@ function searchSeries(series, x){
 			return series[i].z;
 		}
 	}
-	
 }
 
 function generateTimeline(data) {
-
+    $(window).off('resize');
 
 	clearGraph();
 
@@ -64,9 +61,7 @@ function generateTimeline(data) {
             y: getDayMinutes(d),
             z: obj.domainName
         });
-
     }
-
 
     var width = "1400",
         height = "750";
@@ -90,21 +85,19 @@ function generateTimeline(data) {
         series: graphSeries
     });
 
-   
-
     var xAxis = new Rickshaw.Graph.Axis.X({
         graph: graph,
         tickFormat: function(x) {
             return new Date(x*1000).toLocaleDateString();
         }
-    })
+    });
 
     var yAxis = new Rickshaw.Graph.Axis.Y({
         graph: graph,
         tickFormat: function(y) {
             return getTimeString(y);
         }
-    })
+    });
 
     var hoverDetail = new Rickshaw.Graph.HoverDetail( {
 		graph: graph,
