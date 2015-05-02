@@ -19,7 +19,7 @@ function createAccordion(domainHistory) {
         $(div).html("")
         for (i = 0; i < items.length; i++){
             bodyString = getDomainData(domainHistory, items[i])
-            $(div).append('<div class="panel panel-primary" id='+items[i]+'><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse'+i+'">'+items[i]+'</a></h4></div><div id="collapse'+i+'" class="panel-collapse collapse"><div class="panel-body">'+bodyString+'</div></div></div>')
+            $(div).append('<div class="panel panel-primary"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse'+i+'">'+items[i]+'</a></h4></div><div id="collapse'+i+'" class="panel-collapse collapse"><div class="panel-body" id='+items[i]+'>'+bodyString+'</div></div></div>')
         }
     });
 }
@@ -48,5 +48,7 @@ function getDomainData(domainHistory, domainName){
     {
         returnString+=neighbors[i].name+": "+neighbors[i].val+" times <br />"
     }
+    if(neighbors.length == 0)
+        returnString = "No visits to this website."
     return returnString;
 }
