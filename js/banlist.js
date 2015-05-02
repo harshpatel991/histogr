@@ -7,7 +7,7 @@ $("#banlist-button").click(function() {
     listRestrictedDomains();
     listDistractingDomains();
     fadeOutInToolBar();
-    setTitleText("Ban List", "Manage your triggers and block websites from being visited", "TODO: BANLIST");
+    setTitleText("Ban List", "Manage your triggers and block websites from being visited", "This tab lists out the websites that you have banned as well allows you to manage your distraction websites.");
 });
 
 $('#restricted-domain-from').timepicker(); //initialize datepickers

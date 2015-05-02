@@ -2,7 +2,7 @@
 $("#distractions-analysis-button").click(function() {
     $('#mainTabList a[href="#distractions-analysis"]').tab('show');
     fadeOutInToolBar();
-    setTitleText("Distractions Analysis", "An analysis of your distracting websites.", "TODO: DISTRACTION ANALYSIS");
+    setTitleText("Distractions Analysis", "An analysis of your distracting websites.", "This tab displays detailed info about all of your selected distractions.");
 });
 
 

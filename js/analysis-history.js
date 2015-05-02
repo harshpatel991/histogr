@@ -2,7 +2,7 @@
 $("#history-analysis-button").click(function () {
     $('#mainTabList a[href="#history-analysis"]').tab('show');
     fadeOutInToolBar();
-    setTitleText("History Analysis", "An analysis of your history.", "TODO: HISTORY ANALYSIS");
+    setTitleText("History Analysis", "An analysis of your history.", "This tab provides a detailed analysis of your entire browsing history broken down by types of websites.");
 });
 
 $('input:radio[name=pieGraphOptions]').on('change', function () {

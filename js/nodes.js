@@ -5,7 +5,7 @@ $("#node-button").click(function () {
     $('#mainTabList a[href="#nodes"]').tab('show');
     fadeOutInToolBar();
 
-    setTitleText("Nodes", "A graphical representation of the websites you visit.", "TODO: NODES");
+    setTitleText("Nodes", "A graphical representation of the websites you visit.", "This tab displays the URLs you have visited and displays calculated relationships between URLs.");
 
 });
 
