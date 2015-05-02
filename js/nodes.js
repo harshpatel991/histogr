@@ -84,7 +84,7 @@ function getNodeGraphData(domainHistory) {
     for (i in graphData.nodes) {
         graphData.nodes[i].size *= goldenSizeRatio / avgFreq;
 
-        graphData.nodes[i].size = ((Math.log(graphData.nodes[i].size) + 1) / 2.5) * 10
+        graphData.nodes[i].size = ((Math.log(graphData.nodes[i].size) + 1.5) / 2.8) * 10
     }
     return graphData;
 }

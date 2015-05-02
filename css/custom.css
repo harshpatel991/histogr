@@ -46,11 +46,11 @@ h4 {
   color: #fff;
 }
 
-#node-button {
+#banlist-button {
   background-color: #F2517F;
 }
 
-#timeline-button {
+#distractions-analysis-button {
   background-color: #9253a0;
 }
 
@@ -58,11 +58,11 @@ h4 {
   background-color: #5D53A0;
 }
 
-#distractions-analysis-button {
+#timeline-button {
   background-color: #3e79d6;
 }
 
-#banlist-button {
+#node-button {
   background-color: #109dd6;
 }
 

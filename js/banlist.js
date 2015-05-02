@@ -5,9 +5,8 @@
 $("#banlist-button").click(function() {
     $('#mainTabList a[href="#banlist"]').tab('show')
     listRestrictedDomains();
-    listDistractingDomains();
     fadeOutInToolBar();
-    setTitleText("Ban List", "Manage your triggers and block websites from being visited", "This tab lists out the websites that you have banned as well allows you to manage your distraction websites.");
+    setTitleText("Blocked Sites", "Manage websites from being visited", "This tab lists out the websites that you have banned as well allows you to manage your distraction websites.");
 });
 
 $('#restricted-domain-from').timepicker(); //initialize datepickers
@@ -89,33 +88,6 @@ function addRestrictedDomain() {
 
 }
 
-//Called when clicking distracting domain button
-function addDistractingDomainFromTextBox() {
-    $('#banlist-error-box').html("");//clear out error box
-
-    var urlMarkAsDistracting = $('#distracting-domain').val();
-
-    if(urlMarkAsDistracting != '') {
-        $('#distracting-domain').select2("val", ""); //clear the box
-        Parser.isDirty = true;
-        addDistractingDomain(urlMarkAsDistracting);
-    }
-    else {
-        $('#banlist-error-box').html('<div class="alert alert-danger" role="alert">Please enter a domain</div>');
-    }
-}
-
-function addDistractingDomain(domain, shouldReparse) {
-    console.log("adding distracting domain: " + domain);
-    appendToStorage("distractingDomains", domain, function () {
-        if (shouldReparse){
-            console.log('here');
-            Parser.reparseDomainTypes(true);
-        }
-        listDistractingDomains();
-    });
-}
-
 //List out the saved restricted domains on the page
 function listRestrictedDomains() {
     $("#restricted-domains-list").empty(); //clear any domains on the page
@@ -137,18 +109,6 @@ function listRestrictedDomains() {
     });
 }
 
-function listDistractingDomains() {
-    $("#distracting-domains-list").empty(); //clear any domains on the page
-
-    retrieveFromStorage("distractingDomains", function(items) { //get domains from storage
-        if(items !== undefined) {
-            for (var index = 0; index < items.length; index++) {
-                $("#distracting-domains-list").append(items[index] + '<button class="btn btn-danger pull-right" id="delete-distracting-' + index + '"><span class="glyphicon glyphicon-trash"></span> Delete</button><br><hr>');
-                $("#delete-distracting-" + index).click(deleteDistractingDomain(index));
-            }
-        }
-    });
-}
 
 function deleteRestrictedDomain(index) {
     return function () {
@@ -164,15 +124,3 @@ function deleteRestrictedDomain(index) {
     }
 }
 
-function deleteDistractingDomain(index, shouldReparse) {
-    return function () {
-        Parser.isDirty = true;
-
-        pruneFromStorage("distractingDomains", index, function() {
-            if (shouldReparse){
-                Parser.reparseDomainTypes(true);
-            }
-            listDistractingDomains();
-        });
-    }
-}
