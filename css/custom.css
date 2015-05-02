@@ -204,3 +204,9 @@ h4 {
 .help-icon {
   display: none;
 }
+
+#timeline-container {
+  padding-bottom: 0px;
+  padding-left: 20px;
+  padding-right: 20px;
+}

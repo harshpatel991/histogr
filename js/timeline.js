@@ -54,31 +54,32 @@ function generateTimeline(data) {
 	clearGraph();
 
     var rev_data = {distraction: [], trigger: [], other: []};
-    
+
      for (var i = 0; i < data.length; i++) {
         var obj = data[i];
         var d = new Date(obj.visitTime);
 
-        rev_data[obj.domainType].push({
+         rev_data[obj.domainType].push({
             x: d.getTime()/1000,
             y: getDayMinutes(d),
             z: obj.domainName
         });
-		
+
     }
 
 
-
+    var width = "1400",
+        height = "750";
 
     var graph = new Rickshaw.Graph({
         element: document.getElementById("timeline-chart"),
-        width: 700,
-        height: 450,
+        width: width,
+        height: height,
         renderer: 'scatterplot',
         series: [
             {
-            color: CustomColors.other,
-            data: rev_data['other']
+                color: CustomColors.other,
+                data: rev_data['other']
             },
             {
                 color: CustomColors.distraction,
@@ -137,7 +138,7 @@ function generateTimeline(data) {
 		tickFormat: function(x) {
             return new Date(x).toLocaleDateString();
         }
-		} 
+		}
 	);
 
    /* var previewXAxis = new Rickshaw.Graph.Axis.Time({
@@ -153,5 +154,18 @@ function generateTimeline(data) {
 
 	//previewXAxis.render();
     graph.render();
-  
+
+    $(window).on('resize', function(){
+
+        graph.configure({
+            width: $('#timeline').width() - 200,
+            height: $('#timeline').innerHeight() - 300
+        });
+
+        console.log("height is: " + $('#timeline-body').height());
+        $('#preview').width($('#timeline-body').width() - 200);
+        graph.render();
+    });
+
+
 }
