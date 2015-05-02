@@ -103,7 +103,7 @@ function generateNodesGraph(graphData, divSelector) {
             return -1 * d.size * 10;
         })
         .linkDistance(function (d) {
-            return (d.source.size + d.target.size) * 4;
+            return (d.source.size + d.target.size) * 4.5;
         })
         .gravity(.05)
         .on("tick", tick);
@@ -184,7 +184,7 @@ function generateNodesGraph(graphData, divSelector) {
                 toolTipBox += '<button class="btn btn-primary btn-xs center-block" id="nodesAddAsDistraction"><span class="glyphicon glyphicon-plus"></span> Add as Distraction</button></div> </div>';
                 tooltip.style("visibility", "visible")
                     .html(toolTipBox)
-                    .style("top", (relY + 20) + "px")
+                    .style("top", (relY + 193) + "px")
                     .style("left", (relX) + "px");
                 $("#nodesAddAsDistraction").click(function () {
                     addDistractingDomain(data.domain, true);
@@ -195,8 +195,8 @@ function generateNodesGraph(graphData, divSelector) {
                 toolTipBox += '<button class="btn btn-danger btn-xs center-block" id="nodesRemoveAsDistraction"><span class="glyphicon glyphicon-minus"></span> Remove Distraction</button></div> </div>';
                 tooltip.style("visibility", "visible")
                     .html(toolTipBox)
-                    .style("top", (relY) + "px")
-                    .style("left", (relX + 10) + "px");
+                    .style("top", (relY + 193) + "px")
+                    .style("left", (relX) + "px");
                 $("#nodesRemoveAsDistraction").click(function () {
                     deleteDistractingDomain()
                     closeToolTip();
