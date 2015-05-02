@@ -140,7 +140,7 @@ function buildTypedUrlList(startTime, endTime, filter) {
                 }
                 for (var i = 0; i < distractions.length; i++){
                     var domainKey = distractions[i];
-                    console.log(domainKey);
+                    //console.log(domainKey);
                     if (partialDomainHistory[domainKey] != undefined){
                         partialDomainHistory[domainKey].domainType = 'distraction';
                     }
