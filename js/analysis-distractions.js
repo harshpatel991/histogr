@@ -49,6 +49,6 @@ function getDomainData(domainHistory, domainName){
         returnString+=neighbors[i].name+": "+neighbors[i].val+" times <br />"
     }
     if(neighbors.length == 0)
-        returnString = "No visits to this website."
+        returnString = '<font size = "5">No visits to this website.</font> <br />'
     return returnString;
 }
