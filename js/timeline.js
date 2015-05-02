@@ -53,13 +53,13 @@ function generateTimeline(data) {
 
 	clearGraph();
 
-    var rev_data = [];
+    var rev_data = {distraction: [], trigger: [], other: []};
     
      for (var i = 0; i < data.length; i++) {
         var obj = data[i];
         var d = new Date(obj.visitTime);
 
-        rev_data.push({
+        rev_data[obj.domainType].push({
             x: d.getTime()/1000,
             y: getDayMinutes(d),
             z: obj.domainName
@@ -75,10 +75,21 @@ function generateTimeline(data) {
         width: 700,
         height: 450,
         renderer: 'scatterplot',
-        series: [{
-            color: "#9253a0",
-            data: rev_data
-        }]
+        series: [
+            {
+            color: CustomColors.other,
+            data: rev_data['other']
+            },
+            {
+                color: CustomColors.distraction,
+                data: rev_data['distraction']
+            },
+            {
+                color: CustomColors.trigger,
+                data: rev_data['trigger']
+            }
+
+        ]
     });
 
    
