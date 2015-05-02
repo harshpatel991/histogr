@@ -71,26 +71,23 @@ function generateTimeline(data) {
     var width = "1400",
         height = "750";
 
+    var graphSeries = [];
+    if (rev_data['other'].length > 0){
+        graphSeries.push({color: CustomColors.other, data: rev_data['other'], name: 'Other'});
+    }
+    if (rev_data['distraction'].length > 0){
+        graphSeries.push({color: CustomColors.distraction, data: rev_data['distraction'], name: 'Distraction'});
+    }
+    if (rev_data['trigger'].length > 0){
+        graphSeries.push({color: CustomColors.trigger, data: rev_data['trigger'], name: 'Trigger'});
+    }
+
     var graph = new Rickshaw.Graph({
         element: document.getElementById("timeline-chart"),
         width: width,
         height: height,
         renderer: 'scatterplot',
-        series: [
-            {
-                color: CustomColors.other,
-                data: rev_data['other']
-            },
-            {
-                color: CustomColors.distraction,
-                data: rev_data['distraction']
-            },
-            {
-                color: CustomColors.trigger,
-                data: rev_data['trigger']
-            }
-
-        ]
+        series: graphSeries
     });
 
    
