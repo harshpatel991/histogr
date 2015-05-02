@@ -210,3 +210,11 @@ h4 {
   padding-left: 20px;
   padding-right: 20px;
 }
+
+#timeline-legend {
+  width: 500px;
+  height: 50px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}

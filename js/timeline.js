@@ -3,8 +3,9 @@ $("#timeline-button").click(function() {
     $('#mainTabList a[href="#timeline"]').tab('show');
     fadeOutInToolBar();
     setTitleText("Timeline", "Your history in order of its visitation", "This tab displays the visit times and categories of websites that you visit.");
-});
+    positionTimelineLegend();
 
+});
 $(function() {
     document.addEventListener('parse', function(value) {
     	current_history_data = value.detail.entireHistory;
@@ -135,7 +136,15 @@ function generateTimeline(data) {
 
     $(window).on('resize', function(){
         resizeTimeline();
+        positionTimelineLegend();
     });
 
     resizeTimeline();
+}
+
+
+
+function positionTimelineLegend(){
+    var legendTop = $(window).height()-70;
+    $('#timeline-legend').offset({top: legendTop});
 }
