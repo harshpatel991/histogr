@@ -164,9 +164,15 @@ function deleteRestrictedDomain(index) {
     }
 }
 
-function deleteDistractingDomain(index) {
+function deleteDistractingDomain(index, shouldReparse) {
     return function () {
         Parser.isDirty = true;
-        pruneFromStorage("distractingDomains", index, function() {listDistractingDomains();});
+
+        pruneFromStorage("distractingDomains", index, function() {
+            if (shouldReparse){
+                Parser.reparseDomainTypes(true);
+            }
+            listDistractingDomains();
+        });
     }
 }

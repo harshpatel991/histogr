@@ -28,6 +28,8 @@ function createPieGraph(data){
             title: pieGraphDayTitles[0]
         }
     });
+
+    pieGraphChangeDaySelector($('input:radio[name=pieGraphOptions]:checked').val());
 }
 
 function pieGraphChangeDaySelector(selector){

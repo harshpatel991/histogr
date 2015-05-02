@@ -78,11 +78,16 @@ function createBarGraph(historyData) {
             return height - y(d.totalFreq);
         });
 
+    var $radioButtons = $('input:radio[name=sortGraphOptions]');
+
     //$("#analysisChartSort-selection").on("change", change);
-    $('input:radio[name=sortGraphOptions]').on('change', function () {
-        console.log(this.value);
+    $radioButtons.on('change', function () {
         change(this.value);
     });
+
+    //console.log('radio: ' + $radioButtons.value());
+    change($('input:radio[name=sortGraphOptions]:checked').val());
+
     function change(sortValue) {
 
         // Copy-on-write since tweens are evaluated after a delay.

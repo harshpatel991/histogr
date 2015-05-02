@@ -4,10 +4,12 @@ var lineGraphDayTitles = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'
 
 function createLineGraph(data){
     lineGraphData = data;
-    generateLineGraph(data.hours, 'hours');
+    var selector = $('input:radio[name=lineGraphOptions]:checked').val();
+    generateLineGraph(data[selector], selector);
 }
 
 function generateLineGraph(data, selector) {
+
     $('.analysis-chart-line').html('');
     var xLabel = selector == 'hours' ? 'Hour of Day' : 'Day of Week';
     lineChart = c3.generate({

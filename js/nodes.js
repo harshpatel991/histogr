@@ -198,7 +198,7 @@ function generateNodesGraph(graphData, divSelector) {
                     .style("top", (relY + 193) + "px")
                     .style("left", (relX) + "px");
                 $("#nodesRemoveAsDistraction").click(function () {
-                    deleteDistractingDomain()
+                    deleteDistractionByDomain(data.domain);
                     closeToolTip();
                 })
             }
@@ -252,3 +252,14 @@ function generateNodesGraph(graphData, divSelector) {
     scaleGraph();
 }
 
+
+function deleteDistractionByDomain(domain){
+    retrieveFromStorage('distractingDomains', function(distractions){
+        if(distractions !== undefined) {
+            var idx = distractions.indexOf(domain);
+            if (idx > -1) {
+                deleteDistractingDomain(idx, true)();
+            }
+        }
+    });
+}
