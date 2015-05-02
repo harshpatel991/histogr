@@ -5,15 +5,17 @@ $("#node-button").click(function () {
     $('#mainTabList a[href="#nodes"]').tab('show');
     fadeOutInToolBar();
 
-    setTitleText("Nodes", "A graphical representation of the websites you visit.");
+    setTitleText("Nodes", "A graphical representation of the websites you visit.", "TODO: NODES");
 
 });
 
-function setTitleText(title, subtitle) {
-
-
+function setTitleText(title, subtitle, helptext) {
+    var titleHtml = '<span class="tutorial-tootlip" title="'+helptext+'">'+title+'<span class="help-icon glyphicon glyphicon-question-sign" style="font-size: 30px"></span> </span>';
     fadeOutInItem($('#page-title'), function () {
-        $('#page-title').html(title);
+        $('#page-title').text(title);
+    });
+    fadeOutInItem($('#help-text-title'), function () {
+        $('#help-text-title').tooltipster('content', helptext);
     });
     fadeOutInItem($('#page-sub-title'), function () {
         $('#page-sub-title').html(subtitle);

@@ -2,7 +2,7 @@
 $("#timeline-button").click(function() {
     $('#mainTabList a[href="#timeline"]').tab('show');
     fadeOutInToolBar();
-    setTitleText("Timeline", "Your history in order of its visitation");
+    setTitleText("Timeline", "Your history in order of its visitation", "TODO: TIMELINE");
 });
 
 $(function() {

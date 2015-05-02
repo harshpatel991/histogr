@@ -2,7 +2,7 @@
 $("#history-analysis-button").click(function () {
     $('#mainTabList a[href="#history-analysis"]').tab('show');
     fadeOutInToolBar();
-    setTitleText("History Analysis", "An analysis of your history.");
+    setTitleText("History Analysis", "An analysis of your history.", "TODO: HISTORY ANALYSIS");
 });
 
 $('input:radio[name=pieGraphOptions]').on('change', function () {

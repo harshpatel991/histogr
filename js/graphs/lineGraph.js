@@ -41,7 +41,7 @@ function generateLineGraph(data, selector) {
         tooltip: {
             format: {
                 title: function(d) {
-                    return selector == 'days' ? lineGraphDayTitles[d] : d; }
+                    return selector == 'days' ? lineGraphDayTitles[d] : d + ':00'; }
             }
         }
     });
