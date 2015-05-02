@@ -1,3 +1,4 @@
+var svg = ''
 function createBarGraph(historyData) {
     d3.select(".analysis-chart-sort").html('');
     var margin = {top: 20, right: 20, bottom: 100, left: 40},
@@ -19,7 +20,7 @@ function createBarGraph(historyData) {
         .scale(y)
         .orient("left");
 
-    var svg = d3.select(".analysis-chart-sort").append("svg")
+    svg = d3.select(".analysis-chart-sort").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")

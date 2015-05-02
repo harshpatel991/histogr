@@ -190,11 +190,15 @@ function generateNodesGraph(graphData, divSelector) {
                 });
             }
             else {
-                toolTipBox += '<div class="green"><span class="glyphicon glyphicon-ok"></span> Marked as Distraction</div></div> </div>';
+                toolTipBox += '<button class="btn btn-danger btn-xs center-block" id="nodesRemoveAsDistraction"><span class="glyphicon glyphicon-minus"></span> Remove Distraction</button></div> </div>';
                 tooltip.style("visibility", "visible")
                     .html(toolTipBox)
                     .style("top", (relY) + "px")
                     .style("left", (relX + 10) + "px");
+                $("#nodesRemoveAsDistraction").click(function () {
+                    deleteDistractingDomain()
+                    closeToolTip();
+                })
             }
             $("#close-tooltip").click(function () {
                 closeToolTip();

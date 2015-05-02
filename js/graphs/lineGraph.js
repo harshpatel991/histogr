@@ -4,11 +4,12 @@ var lineGraphDayTitles = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'
 
 function createLineGraph(data){
     lineGraphData = data;
-    generateLineGraph(data.hours);
+    generateLineGraph(data.hours, 'hours');
 }
 
-function generateLineGraph(data) {
+function generateLineGraph(data, selector) {
     $('.analysis-chart-line').html('');
+    var xLabel = selector == 'hours' ? 'Hour of Day' : 'Day of Week';
     lineChart = c3.generate({
         bindto: '.analysis-chart-line',
         size: {
@@ -27,15 +28,38 @@ function generateLineGraph(data) {
             }
         },
 
-
         axis: {
             x: {
-                type: 'category'
+                type: 'category',
+                label: xLabel
+            },
+            y: {
+                label: '# of Visits'
+            }
+        },
+
+        tooltip: {
+            format: {
+                title: function(d) {
+                    return selector == 'days' ? lineGraphDayTitles[d] : d; }
             }
         }
     });
+
+    var $tooltip = $('.c3-tooltip > tbody > tr > th');
+    $tooltip.text(lineGraphDayTitles[0]);
+    if (selector == 'days'){
+        fixDaysOfWeek();
+    }
+
+    function fixDaysOfWeek(){
+        $('.c3-axis-x > g > text > tspan').each(function(){
+            var dayText = lineGraphDayTitles[$(this).text()];
+            $(this).text(dayText);
+        });
+    }
 }
 
 function lineGraphChange(selector) {
-    generateLineGraph(lineGraphData[selector]);
+    generateLineGraph(lineGraphData[selector], selector);
 }
