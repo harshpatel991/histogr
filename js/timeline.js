@@ -107,19 +107,8 @@ function generateTimeline(data) {
 		}
 	} );
 
-    
-
     xAxis.render();
     yAxis.render();
-    graph.render();
-
-
-    
-    
-
-   
-
-    
 
     var preview = new Rickshaw.Graph.RangeSlider( {
 		graph: graph,
@@ -131,31 +120,22 @@ function generateTimeline(data) {
 		}
 	);
 
-   /* var previewXAxis = new Rickshaw.Graph.Axis.Time({
-		//graph: preview.previews[0],
-		graph: graph,
-		//timeFixture: new Rickshaw.Fixtures.Time.Local(),
-		//ticksTreatment: ticksTreatment
-	});*/
-
-	
-
     graph.renderer.dotSize = 3;
-
-	//previewXAxis.render();
     graph.render();
 
-    $(window).on('resize', function(){
-
+    function resizeTimeline() {
         graph.configure({
-            width: $('#timeline').width() - 200,
+            width: $('#timeline').width() - 150,
             height: $('#mainTabList').height() - 300
         });
 
-        //console.log("height is: " + $('#timeline-body').height());
-        //$('#preview').width($('#timeline-body').width() - 200);
+        $('#preview').width($('#timeline').width() - 150);
         graph.render();
+    }
+
+    $(window).on('resize', function(){
+        resizeTimeline();
     });
 
-
+    resizeTimeline();
 }
