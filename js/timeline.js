@@ -156,11 +156,11 @@ function generateTimeline(data) {
 
         graph.configure({
             width: $('#timeline').width() - 200,
-            height: $('#timeline').innerHeight() - 300
+            height: $('#mainTabList').height() - 300
         });
 
-        console.log("height is: " + $('#timeline-body').height());
-        $('#preview').width($('#timeline-body').width() - 200);
+        //console.log("height is: " + $('#timeline-body').height());
+        //$('#preview').width($('#timeline-body').width() - 200);
         graph.render();
     });
 
