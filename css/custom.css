@@ -201,6 +201,11 @@ h4 {
   color: #9253a0;
 }
 
+.type-restricted{
+  fill: #F2517F;
+  color: #F2517F;
+}
+
 .help-icon {
   display: none;
 }

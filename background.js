@@ -34,17 +34,27 @@ function background_convertTimes(timesList){
     return convertedTimes;
 }
 
+function background_getDomainNameFromUrl(url){
+    if (url.indexOf('https://')==-1 && url.indexOf('http://')==-1){
+        return '';
+    }
+    var subs = url.split('/')[2].split('.');
+    if (subs.length < 2){
+        return '';
+    }
+    return subs[subs.length-2] + '.' + subs[subs.length-1];
+}
+
 chrome.webRequest.onBeforeRequest.addListener(
     function (details) {
         var currDt = new Date();
         var currMins = currDt.getHours() * 60 + currDt.getMinutes();
+        var domainName = background_getDomainNameFromUrl(details.url);
         for (var i  in background_restrictedDomains) {
-            var shouldBlock = details.url.indexOf(background_restrictedDomains[i]) > -1 &&
+            var shouldBlock = domainName.indexOf(background_restrictedDomains[i]) > -1 &&
                     currMins >= background_restrictedStartTimes[i] && currMins <= background_restrictedEndTimes[i];
             if (shouldBlock) {
-                console.log(background_restrictedDomains[i] + ' blocked');
-                console.log(background_restrictedDomains);
-                return {redirectUrl: chrome.extension.getURL('html/blocked_site.html')};
+                return {redirectUrl: chrome.extension.getURL('html/blocked_site.html?blockedUrl='+domainName+'&unblockTime='+background_restrictedEndTimes[i])};
             }
         }
         return {cancel: false};
