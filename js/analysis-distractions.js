@@ -1,6 +1,7 @@
 //On clicking the timelline side bar button
 $("#distractions-analysis-button").click(function() {
     $('#mainTabList a[href="#distractions-analysis"]').tab('show');
+    $('#openTutorialLink').attr('data-slide-to', '6');
     fadeOutInToolBar();
     setTitleText("Distractions Analysis", "An analysis of your distracting websites.", "This tab displays detailed info about all of your selected distractions.");
 });
@@ -11,17 +12,29 @@ $(document).ready(function(){
     document.addEventListener('reparseUpdate', function (value) {
         createAccordion(value.detail.parsedDomainHistory)
     });
+    $('#distracting-domain').on('change',function(){
+        console.log($(this).val());
+        addDistractingDomainFromTextBox();
+    });
+
 });
 
 function createAccordion(domainHistory) {
     retrieveFromStorage('distractingDomains', function(items) {
-        var div = document.getElementById("accordion")
+        var div = document.getElementById("accordion");
         $(div).html("")
         for (i = 0; i < items.length; i++){
-            bodyString = getDomainData(domainHistory, items[i])
-            $(div).append('<div class="panel panel-primary" style="border-color: #ccc"><div class="panel-heading" style="background-color: #eeeeee; color: #333;"><button class="btn btn-danger btn-xs pull-right" id="delete-distracting-' + i + '"><span class="glyphicon glyphicon-trash"></span> Delete</button><h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse'+i+'">'+items[i]+'</a></h4></div><div id="collapse'+i+'" class="panel-collapse collapse"><div class="panel-body" id='+items[i]+'>'+bodyString+'</div></div></div>');
+            bodyString = getDomainData(domainHistory, items[i]);
+            $(div).append('<div class="panel panel-primary" style="border-color: #ccc"><div class="panel-heading" style="background-color: #eeeeee; color: #333;"><button class="btn btn-danger btn-xs pull-right" id="delete-distracting-' + i + '"><span class="glyphicon glyphicon-trash"></span> Delete</button><h4 class="panel-title"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span><a data-toggle="collapse" data-parent="#accordion" href="#collapse'+i+'"> '+items[i]+'</a></h4></div><div id="collapse'+i+'" class="panel-collapse collapse"><div class="panel-body" id='+items[i]+'>'+bodyString+'</div></div></div>');
             $("#delete-distracting-" + i).click(deleteDistractingDomain(i, true));
         }
+        $('.panel').on('show.bs.collapse', function(){
+            var arrow = $(this).find('.glyphicon');
+            arrow.toggleClass('glyphicon-chevron-right glyphicon-chevron-down');
+        }).on('hidden.bs.collapse', function(){
+            var arrow = $(this).find('.glyphicon');
+            arrow.toggleClass('glyphicon-chevron-down glyphicon-chevron-right');
+        });
     });
 }
 

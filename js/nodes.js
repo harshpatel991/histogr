@@ -3,6 +3,7 @@
 //On clicking the banlist side bar button, refresh the lists
 $("#node-button").click(function () {
     $('#mainTabList a[href="#nodes"]').tab('show');
+    $('#openTutorialLink').attr('data-slide-to', '0');
     fadeOutInToolBar();
 
     setTitleText("Nodes", "A graphical representation of the websites you visit.", "This tab displays the URLs you have visited and displays calculated relationships between URLs.");

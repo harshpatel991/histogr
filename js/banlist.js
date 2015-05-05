@@ -3,7 +3,8 @@
 
 //On clicking the banlist side bar button, refresh the lists
 $("#banlist-button").click(function() {
-    $('#mainTabList a[href="#banlist"]').tab('show')
+    $('#mainTabList a[href="#banlist"]').tab('show');
+    $('#openTutorialLink').attr('data-slide-to', '8');
     listRestrictedDomains();
     fadeOutInToolBar();
     setTitleText("Blocked Sites", "Manage websites from being visited", "This tab lists out the websites that you have banned as well allows you to manage your distraction websites.");

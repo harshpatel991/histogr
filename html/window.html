@@ -156,9 +156,11 @@
                             <div class="pull-right" id="help-box-container">
                                 <div class="checkbox checkbox-info" style="display: inline-block">
                                     <input type="checkbox" id="tooltips-enabled">
-                                    <label for="tooltips-enabled">Tooltips </label> |
+                                    <label for="tooltips-enabled">Help Tips </label> |
                                 </div>
-                                <a class="btn btn-info btn-xs" style="margin-right: 10px" href="#" data-toggle="modal" data-target="#tutorialModal">Open Tutorial</a>
+                                <a id="openTutorialLink" href="#tutorialCarousel" data-slide-to="0">
+                                    <button class="btn btn-info btn-xs" style="margin-right: 10px" data-toggle="modal" data-target="#tutorialModal">Open Tutorial</button>
+                                </a>
                                 <button id="clear-storage-btn" class="btn btn-danger btn-xs hidden" style="margin-right: 10px" href="#">Clear Local Storage</button>
                             </div>
 

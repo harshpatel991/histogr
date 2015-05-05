@@ -1,6 +1,7 @@
 //On clicking the timelline side bar button
 $("#timeline-button").click(function() {
     $('#mainTabList a[href="#timeline"]').tab('show');
+    $('#openTutorialLink').attr('data-slide-to', '4');
     fadeOutInToolBar();
     setTitleText("Timeline", "Your history in order of its visitation", "This tab displays the visit times and categories of websites that you visit.");
     positionTimelineLegend();

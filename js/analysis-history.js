@@ -1,6 +1,7 @@
 //On clicking the timelline side bar button
 $("#history-analysis-button").click(function () {
     $('#mainTabList a[href="#history-analysis"]').tab('show');
+    $('#openTutorialLink').attr('data-slide-to', '5');
     fadeOutInToolBar();
     setTitleText("History Analysis", "An analysis of your history.", "This tab provides a detailed analysis of your entire browsing history broken down by types of websites.");
 });
