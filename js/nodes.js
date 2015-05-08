@@ -101,12 +101,12 @@ function generateNodesGraph(graphData, divSelector) {
     var force = d3.layout.force()
         .size([width, height])
         .charge(function (d) {
-            return -1 * d.size * 10;
+            return -1 * d.size * 100;
         })
         .linkDistance(function (d) {
             return (d.source.size + d.target.size) * 4.5;
         })
-        .gravity(.05)
+        .gravity(.4)
         .on("tick", tick);
 
     var drag = force.drag()
